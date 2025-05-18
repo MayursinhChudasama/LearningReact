@@ -7,12 +7,15 @@ export default function TimerChallenge({ title, targetTime }) {
   const dialog = useRef();
   const [timeRemaining, setTimeRemaining] = useState(targetTime * 1000);
 
+  
   const timerIsActive = timeRemaining > 0 && timeRemaining < targetTime * 1000;
 
   if (timeRemaining <= 0) {
     clearInterval(timer.current);
-    setTimeRemaining(targetTime * 1000);
     dialog.current.showModal();
+  }
+  function handleReset() {
+    setTimeRemaining(targetTime * 1000);
   }
   function handleStart() {
     // setTimerStarted(true);
@@ -31,6 +34,7 @@ export default function TimerChallenge({ title, targetTime }) {
         ref={dialog}
         targetTime={targetTime}
         remainingTime={timeRemaining}
+        onReset={handleReset}
       />
 
       <section className='challenge'>
