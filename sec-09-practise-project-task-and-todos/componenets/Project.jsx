@@ -1,3 +1,10 @@
 export default function Project() {
-  return <h1>Project Name</h1>;
+  return (
+    <section>
+      <h1>Project Name</h1>
+      <p>Desc</p>
+      <p>Due-Date</p>
+      
+    </section>
+  );
 }

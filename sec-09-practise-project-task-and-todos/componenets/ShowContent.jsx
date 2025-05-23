@@ -2,12 +2,19 @@ import Input from "./Input";
 import projects from "../src/utils/projects.js";
 import { useRef } from "react";
 import { useState } from "react";
+import Project from "./Project.jsx";
 //
-export default function ShowContent({ handleIsAdd, isAdd, handleClick }) {
+export default function ShowContent({
+  showProject,
+  handleIsAdd,
+  isAdd,
+  handleClick,
+}) {
   const titleRef = useRef();
   const descRef = useRef();
   const dateRef = useRef();
   const [error, setError] = useState(false);
+
   // let isRequired = false;
   const errorMsg = (
     <p className='text-red-500 mx-auto'>!! Please fill all the fields !!</p>
@@ -34,6 +41,7 @@ export default function ShowContent({ handleIsAdd, isAdd, handleClick }) {
       setError(true);
     }
   }
+  let ShowContent;
   const noProject = (
     <div className='flex flex-col items-center gap-5 p-3'>
       <h1>No project selected</h1>
@@ -83,10 +91,12 @@ export default function ShowContent({ handleIsAdd, isAdd, handleClick }) {
       {error ? errorMsg : ""}
     </div>
   );
+  const ProjectSelected = "";
   return (
     <>
       <main className='bg-white w-screen '>
         {isAdd ? noProject : addProject}
+        {ShowContent}
       </main>
     </>
   );

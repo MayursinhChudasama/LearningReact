@@ -1,5 +1,5 @@
 import projects from "../src/utils/projects.js";
-export default function Sidebar({ handleClick }) {
+export default function Sidebar({ handleProject, handleClick }) {
   return (
     <section className='bg-[#d8d5db] flex flex-col h-220 w-70 '>
       <h1 className='bg-blue-50 text-center p-10 h-30'>Your Projects</h1>
@@ -13,6 +13,7 @@ export default function Sidebar({ handleClick }) {
         {projects.map((project, i) => {
           return (
             <button
+            onClick={handleProject}
               key={i}
               className='bg-blue-100 h-20  text-center p-7 hover:cursor-pointer'>
               {project.title}
