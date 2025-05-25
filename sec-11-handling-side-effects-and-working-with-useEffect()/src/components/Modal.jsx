@@ -11,16 +11,6 @@ function Modal({ children, open }) {
       dialog.current.close();
     }
   }, [open]);
-  // useImperativeHandle(ref, () => {
-  //   return {
-  //     open: () => {
-  //       dialog.current.showModal();
-  //     },
-  //     close: () => {
-  //       dialog.current.close();
-  //     },
-  //   };
-  // });
 
   return createPortal(
     <dialog
