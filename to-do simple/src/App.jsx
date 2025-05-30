@@ -13,6 +13,7 @@ function App() {
   const [todos, setTodos] = useState(todo);
   function handleSetTodo(newTodo) {
     setTodos((prevTodos) => [...prevTodos, newTodo]);
+    
   }
   function handleEditTodos(id, editedTodo) {
     const updatedTodos = [...todos];
