@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { CartContext } from "../store/cartContext";
 
 export default function Meals() {
+  
   const [loadedMeals, setLoadedMeals] = useState([]);
   const { addItem } = useContext(CartContext);
   useEffect(() => {
