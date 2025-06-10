@@ -1,0 +1,14 @@
+{
+  "name": "sec-20-redux-basics",
+  "version": "1.0.0",
+  "description": "redux_basics",
+  "main": "index.js",
+  "scripts": {
+    "run": "index.js"
+  },
+  "author": "Mayur",
+  "license": "ISC",
+  "dependencies": {
+    "redux": "^5.0.1"
+  }
+}
