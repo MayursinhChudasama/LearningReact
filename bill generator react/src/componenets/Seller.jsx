@@ -62,30 +62,28 @@ export default function Seller({ inputValues, handleChange }) {
           onChange={(e) => handleChange(e, "noOfParticulars")}
         />
       </div>
-      {Array.from({ length: Number(inputValues.noOfParticulars) || 0 }).map(
-        (item, i) => {
-          return (
-            <div key={i}>
-              <label className='p-1 m-1'>{"P-" + Number(i + 1)}</label>
-              <input
-                className='bg-blue-100 borer-1 p-1 m-1 w-100'
-                type='text'
-                defaultValue={""}
-                value={inputValues.data.particulars[i]}
-                onChange={(e) => handleChange(e, "particulars", i)}
-              />
+      {Array.from({ length: 12 || 0 }).map((item, i) => {
+        return (
+          <div key={i}>
+            <label className='p-1 m-1'>{"P-" + Number(i + 1)}</label>
+            <input
+              className='bg-blue-100 borer-1 p-1 m-1 w-100'
+              type='text'
+              defaultValue={""}
+              value={inputValues.data.particulars[i]}
+              onChange={(e) => handleChange(e, "particulars", i)}
+            />
 
-              <label className='p-1 m-1'>Rate</label>
-              <input
-                className='bg-blue-100 borer-1 p-1 m-1'
-                type='text'
-                value={inputValues.data.rate[i]}
-                onChange={(e) => handleChange(e, "rate", i)}
-              />
-            </div>
-          );
-        }
-      )}
+            <label className='p-1 m-1'>Rate</label>
+            <input
+              className='bg-blue-100 borer-1 p-1 m-1'
+              type='text'
+              value={inputValues.data.rate[i]}
+              onChange={(e) => handleChange(e, "rate", i)}
+            />
+          </div>
+        );
+      })}
       <div>
         <button
           onClick={() => {

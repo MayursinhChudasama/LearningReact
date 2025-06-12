@@ -312,7 +312,7 @@ export default function generatePDFLayout1(inputValues) {
             colSpan: 2,
             styles: {
               halign: "center",
-              fontStyle: "bold",
+              // fontStyle: "bold",
               lineWidth: { top: 0.4, right: 0.4, bottom: 0.4, left: 0.4 },
               fillColor: [255, 255, 255],
             },
@@ -345,7 +345,7 @@ export default function generatePDFLayout1(inputValues) {
               halign: "center",
               fillColor: [255, 255, 255],
               lineWidth: { top: 0.4, right: 0.4, bottom: 0, left: 0.4 },
-              fontStyle: "bold",
+              // fontStyle: "bold",
             },
           },
           {
@@ -405,7 +405,7 @@ export default function generatePDFLayout1(inputValues) {
               halign: "center",
               fillColor: [255, 255, 255],
               lineWidth: { top: 0, right: 0.4, bottom: 0, left: 0.4 },
-              fontStyle: "bold",
+              // fontStyle: "bold",
             },
           },
           {
@@ -435,7 +435,7 @@ export default function generatePDFLayout1(inputValues) {
               halign: "center",
               fillColor: [255, 255, 255],
               lineWidth: { top: 0, right: 0.4, bottom: 0, left: 0.4 },
-              fontStyle: "bold",
+              // fontStyle: "bold",
             },
           },
           {
@@ -465,7 +465,7 @@ export default function generatePDFLayout1(inputValues) {
               halign: "center",
               fillColor: [255, 255, 255],
               lineWidth: { top: 0, right: 0.4, bottom: 0.4, left: 0.4 },
-              fontStyle: "bold",
+              // fontStyle: "bold",
             },
           },
           {
@@ -515,7 +515,7 @@ export default function generatePDFLayout1(inputValues) {
             content: "",
             colSpan: 8,
             styles: {
-              cellPadding: 10, // Equal padding on all sides of the cell
+              cellPadding: 6, // Equal padding on all sides of the cell
               fillColor: [255, 255, 255],
               lineWidth: { top: 0.4, right: 0.4, bottom: 0, left: 0.4 },
             },

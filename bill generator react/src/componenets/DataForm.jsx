@@ -84,12 +84,12 @@ export default function DataForm() {
           <option
             value='layout1'
             id='layout1'>
-            Layout-1
+            Layout-1 (15)
           </option>
           <option
             value='layout2'
             id='layout2'>
-            Layout-2
+            Layout-2 (12)
           </option>
           <option
             value='layout3'
