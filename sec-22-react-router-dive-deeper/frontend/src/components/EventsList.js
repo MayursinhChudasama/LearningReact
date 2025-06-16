@@ -1,8 +1,6 @@
 import { Link, useParams } from "react-router";
 import classes from "./EventsList.module.css";
 function EventsList({ events }) {
-  
-
   // const params = useParams();
   return (
     <div className={classes.events}>

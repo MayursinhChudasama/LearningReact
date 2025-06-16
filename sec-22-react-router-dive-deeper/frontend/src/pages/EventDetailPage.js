@@ -1,3 +1,5 @@
+import EventItem from "../components/EventItem";
+
 export default function EventDetailPage() {
-  return <h1>EventDetailPage</h1>;
+  return <EventItem />;
 }
