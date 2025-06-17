@@ -1,3 +1,6 @@
+import { redirect } from "react-router";
+import EventForm from "../components/EventForm";
+
 export default function NewEventPage() {
-  return <h1>NewEventPage</h1>;
+  return <EventForm method={"POST"} />;
 }
