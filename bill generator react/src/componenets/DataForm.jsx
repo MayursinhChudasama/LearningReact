@@ -66,41 +66,28 @@ export default function DataForm() {
           onChange={(e) => handleChange(e, "buyerName")}
         />
         <Input
+          isAddress
           label='Buyer Address'
           id='buyerAddress'
           onChange={(e) => handleChange(e, "buyerAddress")}
         />
-
-        <label
-          className='p-1 m-1'
-          htmlFor='layoutType'>
-          Layout-type
-        </label>
-        <select
-          id='layoutType'
-          className='bg-blue-100 border-1 p-1 m-1'
-          value={inputValues?.layoutType}
-          onChange={(e) => handleChange(e, "layoutType")}>
-          <option
-            value='layout1'
-            id='layout1'>
-            Layout-1 (15)
-          </option>
-          <option
-            value='layout2'
-            id='layout2'>
-            Layout-2 (12)
-          </option>
-          <option
-            value='layout3'
-            id='layout3'>
-            Layout-3
-          </option>
-        </select>
       </div>
 
       <div>
         <Seller
+          num='1'
+          inputValues={inputValues}
+          setInputValues={setInputValues}
+          handleChange={handleChange}
+        />
+        <Seller
+          num='2'
+          inputValues={inputValues}
+          setInputValues={setInputValues}
+          handleChange={handleChange}
+        />
+        <Seller
+          num='3'
           inputValues={inputValues}
           setInputValues={setInputValues}
           handleChange={handleChange}

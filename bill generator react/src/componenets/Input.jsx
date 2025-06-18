@@ -1,4 +1,8 @@
-export default function Input({ label, id, width, type, ...props }) {
+export default function Input({ label, id, isAddress, type, ...props }) {
+  let width = " w-50";
+  if (isAddress) {
+    width = " w-175";
+  }
   return (
     <>
       <label
@@ -7,7 +11,10 @@ export default function Input({ label, id, width, type, ...props }) {
         {label}:
       </label>
       <input
-        className={`bg-blue-100 border-1 p-1 m-1 w-${width}`}
+        className={
+          `bg-[#4A4A4A] text-[#F5F5F5] border-1 border-[#2F2F2F] focus:border-[#3B82F6] focus:outline-none focus:ring-2 focus:ring-[#3B82F6]/50 p-1 m-1` +
+          width
+        }
         type={type || "text"}
         id={id}
         name={id}
