@@ -1,8 +1,8 @@
 const obj = [
   {
-    buyerName: "Mayur",
+    buyerName: "Mayur Chudasama",
     buyerAddress: "Rajkot",
-    sellerOne: {
+    seller1: {
       layoutType: "layout1",
       name: "sellerOne",
       address: "sellerOne Address",
@@ -17,7 +17,7 @@ const obj = [
         rate: [],
       },
     },
-    sellerTwo: {
+    seller2: {
       layoutType: "layout2",
       name: "sellerTwo",
       address: "sellerTwo Address",
@@ -32,7 +32,7 @@ const obj = [
         rate: [],
       },
     },
-    sellerThree: {
+    seller3: {
       layoutType: "layout3",
       name: "sellerThree",
       address: "sellerThree Address",
@@ -51,7 +51,7 @@ const obj = [
   {
     buyerName: "PDC",
     buyerAddress: "Amdbd",
-    sellerOne: {
+    seller1: {
       layoutType: "layout1",
       name: "PDC-1",
       address: "PDC-1 Address",
@@ -66,7 +66,7 @@ const obj = [
         rate: [],
       },
     },
-    sellerTwo: {
+    seller2: {
       layoutType: "layout2",
       name: "PDC-2",
       address: "PDC-2 Address",
@@ -81,7 +81,7 @@ const obj = [
         rate: [],
       },
     },
-    sellerThree: {
+    seller3: {
       layoutType: "layout3",
       name: "PDC-3",
       address: "PDC-3 Address",
@@ -100,7 +100,7 @@ const obj = [
   {
     buyerName: "PDC-2",
     buyerAddress: "Amdbd",
-    sellerOne: {
+    seller1: {
       layoutType: "layout1",
       name: "PDC-1",
       address: "PDC-1 Address",
@@ -115,7 +115,7 @@ const obj = [
         rate: [],
       },
     },
-    sellerTwo: {
+    seller2: {
       layoutType: "layout2",
       name: "PDC-2",
       address: "PDC-2 Address",
@@ -130,7 +130,7 @@ const obj = [
         rate: [],
       },
     },
-    sellerThree: {
+    seller3: {
       layoutType: "layout3",
       name: "PDC-3",
       address: "PDC-3 Address",
@@ -149,7 +149,7 @@ const obj = [
   {
     buyerName: "PDC-3",
     buyerAddress: "Amdbd",
-    sellerOne: {
+    seller1: {
       layoutType: "layout1",
       name: "PDC-1",
       address: "PDC-1 Address",
@@ -164,7 +164,7 @@ const obj = [
         rate: [],
       },
     },
-    sellerTwo: {
+    seller2: {
       layoutType: "layout2",
       name: "PDC-2",
       address: "PDC-2 Address",
@@ -179,7 +179,7 @@ const obj = [
         rate: [],
       },
     },
-    sellerThree: {
+    seller3: {
       layoutType: "layout3",
       name: "PDC-3",
       address: "PDC-3 Address",
@@ -198,9 +198,17 @@ const obj = [
 ];
 
 export function setData() {
-  localStorage.setItem("home", JSON.stringify(obj));
+  //   let home = getData();
+  if (localStorage.length == 0) {
+    localStorage.setItem("home", JSON.stringify(obj));
+  }
 }
 export function getData() {
   const data = JSON.parse(localStorage.getItem("home"));
   return data;
 }
+
+let num = 1;
+let myObj = {};
+myObj[`seller${num}`] = "details";
+// console.log(myObj);

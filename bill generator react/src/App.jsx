@@ -10,6 +10,7 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <HomePage /> },
       { path: "new", element: <DataForm /> },
+      { path: ":buyerName", element: <DataForm /> },
     ],
   },
 ]);

@@ -4,15 +4,15 @@ import generatePDFLayout1 from "../utils/generatePDFLayout1.js";
 import generatePDFLayout2 from "../utils/generatePDFLayout2.js";
 import generatePDFLayout3 from "../utils/generatePDFLayout3.js";
 
-export default function Seller({ num, inputValues, handleChange }) {
+export default function Seller({ sellerData, num, inputValues, handleChange }) {
   const [hide, setShow] = useState(false);
   function handleParticulars() {
     let noOfParticulars = 0;
-    if (inputValues.layoutType === "layout1") {
+    if (inputValues[`seller${num}`].layoutType === "layout1") {
       noOfParticulars = 15;
-    } else if (inputValues.layoutType === "layout2") {
+    } else if (inputValues[`seller${num}`].layoutType === "layout2") {
       noOfParticulars = 12;
-    } else if (inputValues.layoutType === "layout3") {
+    } else if (inputValues[`seller${num}`].layoutType === "layout3") {
       noOfParticulars = 13;
     }
     return noOfParticulars;
@@ -40,8 +40,8 @@ export default function Seller({ num, inputValues, handleChange }) {
           <select
             id='layoutType'
             className='bg-[#4A4A4A] text-[#F5F5F5] border-1 border-[#2F2F2F] focus:border-[#3B82F6] focus:outline-none focus:ring-2 focus:ring-[#3B82F6]/50 p-1 m-1'
-            value={inputValues?.layoutType}
-            onChange={(e) => handleChange(e, "layoutType")}>
+            // value={inputValues?.layoutType}
+            onChange={(e) => handleChange(e, "layoutType", "", num)}>
             <option
               value='layout1'
               id='layout1'>
@@ -55,19 +55,20 @@ export default function Seller({ num, inputValues, handleChange }) {
             <option
               value='layout3'
               id='layout3'>
-              Layout-3
+              Layout-3 (13)
             </option>
           </select>
 
           <button
             onClick={() => {
-              if (inputValues.layoutType === "layout1") {
-                generatePDFLayout1(inputValues);
-              } else if (inputValues.layoutType === "layout2") {
-                generatePDFLayout2(inputValues);
-              } else if (inputValues.layoutType === "layout3") {
-                generatePDFLayout3(inputValues);
-              }
+              // if (inputValues.layoutType === "layout1") {
+              //   generatePDFLayout1(inputValues);
+              // } else if (inputValues.layoutType === "layout2") {
+              //   generatePDFLayout2(inputValues);
+              // } else if (inputValues.layoutType === "layout3") {
+              //   generatePDFLayout3(inputValues);
+              // }
+              // console.log("inputValues-->", inputValues);
             }}
             className='p-2 m-2 border-1 hover:cursor-pointer'>
             Generate
@@ -78,13 +79,15 @@ export default function Seller({ num, inputValues, handleChange }) {
             <Input
               label='Seller Name'
               id='sellerName'
-              onChange={(e) => handleChange(e, "sellerName")}
+              defaultValue={sellerData?.name}
+              onChange={(e) => handleChange(e, "name", "", num)}
             />
             <Input
               isAddress
               label='Seller Address'
               id='sellerAddress'
-              onChange={(e) => handleChange(e, "sellerAddress")}
+              defaultValue={sellerData?.address}
+              onChange={(e) => handleChange(e, "address", "", num)}
             />
           </div>
           {/* INVOICE */}
@@ -92,17 +95,20 @@ export default function Seller({ num, inputValues, handleChange }) {
             <Input
               label='Invoice No Prefix'
               id='invoiceNoPrefix'
-              onChange={(e) => handleChange(e, "invoiceNoPrefix")}
+              defaultValue={sellerData?.invoiceNoPrefix}
+              onChange={(e) => handleChange(e, "invoiceNoPrefix", "", num)}
             />
             <Input
               label='Invoice No Start'
               id='invoiceNoStart'
-              onChange={(e) => handleChange(e, "invoiceNoStart")}
+              defaultValue={sellerData?.invoiceNoStart}
+              onChange={(e) => handleChange(e, "invoiceNoStart", "", num)}
             />
             <Input
               label='Invoice No Add'
               id='invoiceNoAdd'
-              onChange={(e) => handleChange(e, "invoiceNoAdd")}
+              defaultValue={sellerData?.invoiceNoAdd}
+              onChange={(e) => handleChange(e, "invoiceNoAdd", "", num)}
             />
           </div>
           {/* DATE & TOOTAL */}
@@ -111,12 +117,14 @@ export default function Seller({ num, inputValues, handleChange }) {
               label='Date Start'
               id='dateStart'
               type='date'
-              onChange={(e) => handleChange(e, "dateStart")}
+              defaultValue={sellerData?.dateStart}
+              onChange={(e) => handleChange(e, "dateStart", "", num)}
             />
             <Input
               label='TOTAL'
               id='total'
-              onChange={(e) => handleChange(e, "total")}
+              defaultValue={sellerData?.total}
+              onChange={(e) => handleChange(e, "total", "", num)}
             />
           </div>
           {/* PARTICUARS */}
@@ -124,8 +132,8 @@ export default function Seller({ num, inputValues, handleChange }) {
             <Input
               label='No of Particulars'
               id='noOfParticulars'
-              value={Number(inputValues.noOfParticulars)}
-              onChange={(e) => handleChange(e, "noOfParticulars")}
+              // value={Number(inputValues[].noOfParticulars)}
+              onChange={(e) => handleChange(e, "noOfParticulars", "", num)}
             />
           </div>
           {Array.from({ length: noOfParticulars || 0 }).map((item, i) => {
@@ -135,17 +143,18 @@ export default function Seller({ num, inputValues, handleChange }) {
                 <input
                   className='bg-[#4A4A4A] text-[#F5F5F5] border-1 border-[#2F2F2F] focus:border-[#3B82F6] focus:outline-none focus:ring-2 focus:ring-[#3B82F6]/50 p-1 m-1 w-100'
                   type='text'
-                  defaultValue={""}
-                  value={inputValues.data.particulars[i]}
-                  onChange={(e) => handleChange(e, "particulars", i)}
+                  // value={inputValues.sellerData.particulars[i]}
+                  defaultValue={sellerData?.sellerData?.particulars[i]}
+                  onChange={(e) => handleChange(e, "particulars", i, num)}
                 />
 
                 <label className='p-1 m-1'>Rate</label>
                 <input
                   className='bg-[#4A4A4A] text-[#F5F5F5] border-1 border-[#2F2F2F] focus:border-[#3B82F6] focus:outline-none focus:ring-2 focus:ring-[#3B82F6]/50 p-1 m-1'
                   type='text'
-                  value={inputValues.data.rate[i]}
-                  onChange={(e) => handleChange(e, "rate", i)}
+                  // value={inputValues.sellerData.rate[i]}
+                  defaultValue={sellerData?.sellerData?.rate[i]}
+                  onChange={(e) => handleChange(e, "rate", i, num)}
                 />
               </div>
             );
