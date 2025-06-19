@@ -9,7 +9,6 @@ const storageSlice = createSlice({
   name: "storage",
   initialState: storageSliceInitialState,
   reducers: {
-    saveInvoiceData(state, action) {},
     handleSave(state, action) {
       const result = confirm("Are you sure?");
       if (result) {
@@ -23,12 +22,9 @@ const storageSlice = createSlice({
       }
     },
     handleDelete(state, action) {
-      const result = confirm("Are you sure?");
-      if (result) {
-        const { updatedState } = action.payload;
-        state = updatedState;
-        localStorage.setItem("buyers", JSON.stringify(updatedState));
-      }
+      const { updatedState } = action.payload;
+      state = updatedState;
+      localStorage.setItem("buyers", JSON.stringify(updatedState));
     },
   },
 });

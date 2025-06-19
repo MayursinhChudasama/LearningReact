@@ -6,17 +6,19 @@ import generatePDFLayout3 from "../utils/generatePDFLayout3.js";
 import { useDispatch, useSelector } from "react-redux";
 import dataSlice from "../store/dataSlice.js";
 import storageSlice from "../store/storageSlice.js";
+import { useParams } from "react-router";
 
 const cssClass = `bg-[#4A4A4A] text-[#F5F5F5] border-1 border-[#2F2F2F] focus:border-[#3B82F6] focus:outline-none focus:ring-2 focus:ring-[#3B82F6]/50 p-1 m-1 `;
 
 export default function Seller({ sellerData, num }) {
+  const storedBuyerListData = useSelector((store) => store.storage);
   const inputValues = useSelector((store) => store.data);
+  const params = useParams();
   const dispatch = useDispatch();
   const [hide, setShow] = useState(false);
 
-  const { updateField } = dataSlice.actions;
-  const { saveInvoiceData } = storageSlice.actions;
-  // old
+  const { updateField, saveInvoiceData } = dataSlice.actions;
+  // const { saveInvoiceData } = storageSlice.actions;
   function handleParticulars() {
     let noOfParticulars = 0;
     if (inputValues[`seller${num}`].layoutType === "layout1") {
@@ -29,6 +31,21 @@ export default function Seller({ sellerData, num }) {
     return noOfParticulars;
   }
   const noOfParticulars = handleParticulars();
+
+  const currentBuyerData = storedBuyerListData.find(
+    (buyer) => buyer.buyerName == params?.buyerName
+  );
+
+  function handleSaveFn() {
+    // transform inputValues into InvoiceData
+    // const invoiceData =
+    dispatch(
+      saveInvoiceData({ inputValues, seller: inputValues[`seller${num}`] })
+    );
+    console.log("inputValues-->", currentBuyerData || inputValues);
+    // console.log("invoiceData", invoiceData);
+  }
+  // old
   //
   return (
     <section className='py-3 my-2 border-t-2 '>
@@ -61,7 +78,6 @@ export default function Seller({ sellerData, num }) {
                   key: "layoutType",
                   value: e.target.value,
                   num,
-                  i,
                 })
               );
             }}>
@@ -98,9 +114,7 @@ export default function Seller({ sellerData, num }) {
           {/* SAVE BUTTON */}
           <button
             className='mx-20 text-2xl hover:cursor-pointer'
-            onClick={() => {
-              handleSave(num);
-            }}>
+            onClick={handleSaveFn}>
             💾
           </button>
 
@@ -116,7 +130,6 @@ export default function Seller({ sellerData, num }) {
                     key: "name",
                     value: e.target.value,
                     num,
-                    i,
                   })
                 );
               }}
@@ -132,7 +145,6 @@ export default function Seller({ sellerData, num }) {
                     key: "address",
                     value: e.target.value,
                     num,
-                    i,
                   })
                 );
               }}
@@ -150,7 +162,6 @@ export default function Seller({ sellerData, num }) {
                     key: "invoiceNoPrefix",
                     value: e.target.value,
                     num,
-                    i,
                   })
                 );
               }}
@@ -165,7 +176,6 @@ export default function Seller({ sellerData, num }) {
                     key: "invoiceNoStart",
                     value: e.target.value,
                     num,
-                    i,
                   })
                 );
               }}
@@ -180,7 +190,6 @@ export default function Seller({ sellerData, num }) {
                     key: "invoiceNoAdd",
                     value: e.target.value,
                     num,
-                    i,
                   })
                 );
               }}
@@ -199,7 +208,6 @@ export default function Seller({ sellerData, num }) {
                     key: "dateStart",
                     value: e.target.value,
                     num,
-                    i,
                   })
                 );
               }}
@@ -214,7 +222,6 @@ export default function Seller({ sellerData, num }) {
                     key: "total",
                     value: e.target.value,
                     num,
-                    i,
                   })
                 );
               }}
@@ -232,7 +239,6 @@ export default function Seller({ sellerData, num }) {
                     key: "noOfParticulars",
                     value: e.target.value,
                     num,
-                    i,
                   })
                 );
               }}

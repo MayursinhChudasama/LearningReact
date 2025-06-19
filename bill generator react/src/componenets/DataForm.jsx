@@ -16,7 +16,7 @@ export default function DataForm() {
   const navigate = useNavigate();
   const params = useParams();
 
-  const { updateField } = dataSlice.actions;
+  const { updateField, updateCurrentBuyer } = dataSlice.actions;
   const { handleSave, handleDelete } = storageSlice.actions;
 
   useEffect(() => {
@@ -26,13 +26,17 @@ export default function DataForm() {
   const currentBuyerData = storedBuyerListData.find(
     (buyer) => buyer.buyerName == params?.buyerName
   );
+
   // handleDeleteFn;
   function handleDeleteFn() {
-    const updatedState = storedBuyerListData.filter(
-      (buyer) => buyer.buyerName !== params?.buyerName
-    );
-    dispatch(handleDelete({ updatedState }));
-    navigate("..");
+    const result = confirm("Are you sure?");
+    if (result) {
+      const updatedState = storedBuyerListData.filter(
+        (buyer) => buyer.buyerName !== params?.buyerName
+      );
+      dispatch(handleDelete({ updatedState }));
+      navigate("..");
+    }
   }
   // handleSaveFn
   function handleSaveFn() {
@@ -44,7 +48,10 @@ export default function DataForm() {
       index,
       updatedCurrentBuyer: inputValues,
     };
+    // dispatch(updateCurrentBuyer(currentBuyerData));
     dispatch(handleSave(payload));
+    console.log("inputValues***", inputValues);
+
     navigate("..");
   }
 
@@ -62,7 +69,13 @@ export default function DataForm() {
           id='buyerName'
           defaultValue={currentBuyerData?.buyerName}
           onInput={(e) =>
-            dispatch(updateField({ key: "buyerName", value: e.target.value }))
+            dispatch(
+              updateField({
+                key: "buyerName",
+                value: e.target.value,
+                currentBuyerData,
+              })
+            )
           }
         />
         <Input
@@ -72,7 +85,11 @@ export default function DataForm() {
           defaultValue={currentBuyerData?.buyerAddress}
           onInput={(e) =>
             dispatch(
-              updateField({ key: "buyerAddress", value: e.target.value })
+              updateField({
+                key: "buyerAddress",
+                value: e.target.value,
+                currentBuyerData,
+              })
             )
           }
         />
@@ -83,7 +100,13 @@ export default function DataForm() {
             id='type'
             defaultValue={currentBuyerData?.type}
             onInput={(e) =>
-              dispatch(updateField({ key: "type", value: e.target.value }))
+              dispatch(
+                updateField({
+                  key: "type",
+                  value: e.target.value,
+                  currentBuyerData,
+                })
+              )
             }
           />
           {/* SAVE/EDIT BUTTON */}

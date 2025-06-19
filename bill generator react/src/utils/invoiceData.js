@@ -1,4 +1,6 @@
 export function invoiceDataFn(inputValues) {
+  console.log(inputValues);
+
   // INVOICE NO
   function generateInvoiceNo(invoiceNoPrefix, invoiceNoStart, invoiceNoAdd) {
     let invoiceNo = [];
@@ -155,5 +157,5 @@ export function invoiceDataFn(inputValues) {
   });
   console.log("FINAL INVOICE DATA", invoiceData);
 
-  return invoiceData;
+  // return invoiceData;
 }

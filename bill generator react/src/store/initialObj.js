@@ -47,6 +47,7 @@ const initialObj = {
       rate: [],
     },
   },
+  invoiceData: "",
 };
 
 export default initialObj;

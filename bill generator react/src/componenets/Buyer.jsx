@@ -1,3 +1,5 @@
+import DeleteBtn from "./DeleteBtn";
+
 export default function Buyer({ buyer }) {
   return (
     <article className='w-100 h-64 m-4 p-4 rounded-xl text-center bg-[#181818] text-white shadow-[0_4px_12px_rgba(255,255,255,0.15)] flex flex-col justify-between hover:shadow-[#fbd997]'>
@@ -11,7 +13,10 @@ export default function Buyer({ buyer }) {
       </div>
 
       <p className='text-sm font-medium mb-1'>'Type'</p>
-      <p className='text-xs text-gray-400'>'Date'</p>
+      <div>
+        <p className='text-xs text-gray-400'>'Date' </p>
+        <span></span>
+      </div>
     </article>
   );
 }
