@@ -1,10 +1,14 @@
 import { Link } from "react-router";
+
 import Buyer from "../componenets/Buyer";
-import { getData, setData } from "../utils/storage";
+import defaultBuyerListData from "../store/storage.js";
 
 export default function HomePage() {
-  setData();
-  const buyerListData = getData();
+  const buyerListData = JSON.parse(localStorage.getItem("buyers"));
+  if (localStorage.length == 0) {
+    localStorage.setItem("buyers", JSON.stringify(defaultBuyerListData));
+  }
+
   return (
     <div className='flex flex-wrap justify-center'>
       {buyerListData.map((buyer) => {

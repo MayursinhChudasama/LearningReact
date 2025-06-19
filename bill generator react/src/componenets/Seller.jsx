@@ -3,9 +3,20 @@ import Input from "./Input";
 import generatePDFLayout1 from "../utils/generatePDFLayout1.js";
 import generatePDFLayout2 from "../utils/generatePDFLayout2.js";
 import generatePDFLayout3 from "../utils/generatePDFLayout3.js";
+import { useDispatch, useSelector } from "react-redux";
+import dataSlice from "../store/dataSlice.js";
+import storageSlice from "../store/storageSlice.js";
 
-export default function Seller({ sellerData, num, inputValues, handleChange }) {
+const cssClass = `bg-[#4A4A4A] text-[#F5F5F5] border-1 border-[#2F2F2F] focus:border-[#3B82F6] focus:outline-none focus:ring-2 focus:ring-[#3B82F6]/50 p-1 m-1 `;
+
+export default function Seller({ sellerData, num }) {
+  const inputValues = useSelector((store) => store.data);
+  const dispatch = useDispatch();
   const [hide, setShow] = useState(false);
+
+  const { updateField } = dataSlice.actions;
+  const { saveInvoiceData } = storageSlice.actions;
+  // old
   function handleParticulars() {
     let noOfParticulars = 0;
     if (inputValues[`seller${num}`].layoutType === "layout1") {
@@ -18,8 +29,10 @@ export default function Seller({ sellerData, num, inputValues, handleChange }) {
     return noOfParticulars;
   }
   const noOfParticulars = handleParticulars();
+  //
   return (
     <section className='py-3 my-2 border-t-2 '>
+      {/* SellerNUM */}
       <div className='p-2 m-2 text-center text-xl'>
         <span>Seller-{num}</span>
         <button
@@ -30,6 +43,7 @@ export default function Seller({ sellerData, num, inputValues, handleChange }) {
           {hide ? "Hide" : "Show"}
         </button>
       </div>
+      {/* LAYOUT */}
       {hide && (
         <div>
           <label
@@ -39,9 +53,18 @@ export default function Seller({ sellerData, num, inputValues, handleChange }) {
           </label>
           <select
             id='layoutType'
-            className='bg-[#4A4A4A] text-[#F5F5F5] border-1 border-[#2F2F2F] focus:border-[#3B82F6] focus:outline-none focus:ring-2 focus:ring-[#3B82F6]/50 p-1 m-1'
+            className={cssClass}
             // value={inputValues?.layoutType}
-            onChange={(e) => handleChange(e, "layoutType", "", num)}>
+            onInput={(e) => {
+              dispatch(
+                updateField({
+                  key: "layoutType",
+                  value: e.target.value,
+                  num,
+                  i,
+                })
+              );
+            }}>
             <option
               value='layout1'
               id='layout1'>
@@ -58,7 +81,7 @@ export default function Seller({ sellerData, num, inputValues, handleChange }) {
               Layout-3 (13)
             </option>
           </select>
-
+          {/* GENERATE BUTTON */}
           <button
             onClick={() => {
               // if (inputValues.layoutType === "layout1") {
@@ -68,10 +91,17 @@ export default function Seller({ sellerData, num, inputValues, handleChange }) {
               // } else if (inputValues.layoutType === "layout3") {
               //   generatePDFLayout3(inputValues);
               // }
-              // console.log("inputValues-->", inputValues);
             }}
             className='p-2 m-2 border-1 hover:cursor-pointer'>
             Generate
+          </button>
+          {/* SAVE BUTTON */}
+          <button
+            className='mx-20 text-2xl hover:cursor-pointer'
+            onClick={() => {
+              handleSave(num);
+            }}>
+            💾
           </button>
 
           {/* SELLER DETAILS */}
@@ -80,14 +110,32 @@ export default function Seller({ sellerData, num, inputValues, handleChange }) {
               label='Seller Name'
               id='sellerName'
               defaultValue={sellerData?.name}
-              onChange={(e) => handleChange(e, "name", "", num)}
+              onInput={(e) => {
+                dispatch(
+                  updateField({
+                    key: "name",
+                    value: e.target.value,
+                    num,
+                    i,
+                  })
+                );
+              }}
             />
             <Input
               isAddress
               label='Seller Address'
               id='sellerAddress'
               defaultValue={sellerData?.address}
-              onChange={(e) => handleChange(e, "address", "", num)}
+              onInput={(e) => {
+                dispatch(
+                  updateField({
+                    key: "address",
+                    value: e.target.value,
+                    num,
+                    i,
+                  })
+                );
+              }}
             />
           </div>
           {/* INVOICE */}
@@ -96,35 +144,80 @@ export default function Seller({ sellerData, num, inputValues, handleChange }) {
               label='Invoice No Prefix'
               id='invoiceNoPrefix'
               defaultValue={sellerData?.invoiceNoPrefix}
-              onChange={(e) => handleChange(e, "invoiceNoPrefix", "", num)}
+              onInput={(e) => {
+                dispatch(
+                  updateField({
+                    key: "invoiceNoPrefix",
+                    value: e.target.value,
+                    num,
+                    i,
+                  })
+                );
+              }}
             />
             <Input
               label='Invoice No Start'
               id='invoiceNoStart'
               defaultValue={sellerData?.invoiceNoStart}
-              onChange={(e) => handleChange(e, "invoiceNoStart", "", num)}
+              onInput={(e) => {
+                dispatch(
+                  updateField({
+                    key: "invoiceNoStart",
+                    value: e.target.value,
+                    num,
+                    i,
+                  })
+                );
+              }}
             />
             <Input
               label='Invoice No Add'
               id='invoiceNoAdd'
               defaultValue={sellerData?.invoiceNoAdd}
-              onChange={(e) => handleChange(e, "invoiceNoAdd", "", num)}
+              onInput={(e) => {
+                dispatch(
+                  updateField({
+                    key: "invoiceNoAdd",
+                    value: e.target.value,
+                    num,
+                    i,
+                  })
+                );
+              }}
             />
           </div>
-          {/* DATE & TOOTAL */}
+          {/* DATE & TOTAL */}
           <div>
             <Input
               label='Date Start'
               id='dateStart'
               type='date'
               defaultValue={sellerData?.dateStart}
-              onChange={(e) => handleChange(e, "dateStart", "", num)}
+              onInput={(e) => {
+                dispatch(
+                  updateField({
+                    key: "dateStart",
+                    value: e.target.value,
+                    num,
+                    i,
+                  })
+                );
+              }}
             />
             <Input
               label='TOTAL'
               id='total'
               defaultValue={sellerData?.total}
-              onChange={(e) => handleChange(e, "total", "", num)}
+              onInput={(e) => {
+                dispatch(
+                  updateField({
+                    key: "total",
+                    value: e.target.value,
+                    num,
+                    i,
+                  })
+                );
+              }}
             />
           </div>
           {/* PARTICUARS */}
@@ -133,7 +226,16 @@ export default function Seller({ sellerData, num, inputValues, handleChange }) {
               label='No of Particulars'
               id='noOfParticulars'
               // value={Number(inputValues[].noOfParticulars)}
-              onChange={(e) => handleChange(e, "noOfParticulars", "", num)}
+              onInput={(e) => {
+                dispatch(
+                  updateField({
+                    key: "noOfParticulars",
+                    value: e.target.value,
+                    num,
+                    i,
+                  })
+                );
+              }}
             />
           </div>
           {Array.from({ length: noOfParticulars || 0 }).map((item, i) => {
@@ -141,20 +243,38 @@ export default function Seller({ sellerData, num, inputValues, handleChange }) {
               <div key={i}>
                 <label className='p-1 m-1'>{"P-" + Number(i + 1)}</label>
                 <input
-                  className='bg-[#4A4A4A] text-[#F5F5F5] border-1 border-[#2F2F2F] focus:border-[#3B82F6] focus:outline-none focus:ring-2 focus:ring-[#3B82F6]/50 p-1 m-1 w-100'
+                  className={cssClass + " w-100"}
                   type='text'
                   // value={inputValues.sellerData.particulars[i]}
                   defaultValue={sellerData?.sellerData?.particulars[i]}
-                  onChange={(e) => handleChange(e, "particulars", i, num)}
+                  onInput={(e) => {
+                    dispatch(
+                      updateField({
+                        key: "particulars",
+                        value: e.target.value,
+                        num,
+                        i,
+                      })
+                    );
+                  }}
                 />
 
                 <label className='p-1 m-1'>Rate</label>
                 <input
-                  className='bg-[#4A4A4A] text-[#F5F5F5] border-1 border-[#2F2F2F] focus:border-[#3B82F6] focus:outline-none focus:ring-2 focus:ring-[#3B82F6]/50 p-1 m-1'
+                  className={cssClass}
                   type='text'
                   // value={inputValues.sellerData.rate[i]}
                   defaultValue={sellerData?.sellerData?.rate[i]}
-                  onChange={(e) => handleChange(e, "rate", i, num)}
+                  onInput={(e) => {
+                    dispatch(
+                      updateField({
+                        key: "rate",
+                        value: e.target.value,
+                        num,
+                        i,
+                      })
+                    );
+                  }}
                 />
               </div>
             );

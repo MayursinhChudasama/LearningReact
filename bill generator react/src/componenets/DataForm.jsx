@@ -1,95 +1,54 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useLoaderData, useNavigate, useParams } from "react-router";
 import Input from "./Input";
 import Seller from "./Seller";
-import { useNavigate, useParams } from "react-router";
-import { getData } from "../utils/storage";
-import initialObj from "../utils/initialObj";
+
+import { getData, genInvoiceDataObj } from "../store/storage";
+import { invoiceDataFn } from "../utils/invoiceData";
+import { useDispatch, useSelector } from "react-redux";
+import dataSlice from "../store/dataSlice";
+import storageSlice from "../store/storageSlice";
 
 export default function DataForm() {
+  const inputValues = useSelector((store) => store.data);
+  const storedBuyerListData = useSelector((store) => store.storage);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const params = useParams();
-  let allData = getData();
-  const isAlready = allData.find(
+
+  const { updateField } = dataSlice.actions;
+  const { handleSave, handleDelete } = storageSlice.actions;
+
+  useEffect(() => {
+    console.log("inputValues from store:--", inputValues);
+  }, [inputValues]);
+
+  const currentBuyerData = storedBuyerListData.find(
     (buyer) => buyer.buyerName == params?.buyerName
   );
-  const [inputValues, setInputValues] = useState(isAlready || initialObj);
-  const navigate = useNavigate();
-  //
-  const data = allData.filter(
-    (buyer) => buyer.buyerName == params?.buyerName
-  )[0];
-  //
-  function handleDelete() {
-    const result = confirm("Are you sure?");
-    if (result) {
-      let home = getData().filter(
-        (buyer) => buyer.buyerName !== params?.buyerName
-      );
-      console.log(home);
-      localStorage.setItem("home", JSON.stringify(home));
-      navigate("..");
-    }
+  // handleDeleteFn;
+  function handleDeleteFn() {
+    const updatedState = storedBuyerListData.filter(
+      (buyer) => buyer.buyerName !== params?.buyerName
+    );
+    dispatch(handleDelete({ updatedState }));
+    navigate("..");
   }
-  // handleSave
-  function handleSave() {
-    const result = confirm("Are you sure?");
-    if (result) {
-      let data = [...getData()];
-      if (isAlready) {
-        const index = data.findIndex(
-          (buyer) => buyer.buyerName == params?.buyerName
-        );
-        data[index] = { ...inputValues };
-      } else {
-        data.push(inputValues);
-      }
-      localStorage.setItem("home", JSON.stringify(data));
-      navigate("..");
-    }
+  // handleSaveFn
+  function handleSaveFn() {
+    const index = storedBuyerListData.findIndex(
+      (buyer) => buyer.buyerName == params?.buyerName
+    );
+    const payload = {
+      currentBuyerData,
+      index,
+      updatedCurrentBuyer: inputValues,
+    };
+    dispatch(handleSave(payload));
+    navigate("..");
   }
-  // handleChange
-  function handleChange(event, key, i, num) {
-    let value = event.target.value;
-    if (key === "rate") {
-      value = Number(event.target.value);
-    }
-    if (key === "buyerName" || key === "buyerAddress") {
-      setInputValues((prev) => {
-        return {
-          ...prev,
-          [key]: value,
-        };
-      });
-    } else if (key === "particulars" || key === "rate") {
-      console.log("working parti/rates");
-      setInputValues((prev) => {
-        const updatedArray = [...prev[`seller${num}`].data[key]];
-        updatedArray[i] = value;
-        return {
-          ...prev,
-          [`seller${num}`]: {
-            ...prev[`seller${num}`],
 
-            data: {
-              ...prev[`seller${num}`].data,
-              [key]: updatedArray,
-            },
-          },
-        };
-      });
-    } else {
-      console.log("working else");
-      setInputValues((prev) => {
-        return {
-          ...prev,
-          [`seller${num}`]: {
-            ...prev[`seller${num}`],
-            [key]: value,
-          },
-        };
-      });
-    }
-  }
-  console.log("inputValues-->", inputValues);
+  // componenet Return
   return (
     <form
       onSubmit={(e) => {
@@ -101,35 +60,43 @@ export default function DataForm() {
         <Input
           label='Buyer Name'
           id='buyerName'
-          defaultValue={data?.buyerName}
-          // value={inputValues.buyerName}
-          onChange={(e) => handleChange(e, "buyerName")}
+          defaultValue={currentBuyerData?.buyerName}
+          onInput={(e) =>
+            dispatch(updateField({ key: "buyerName", value: e.target.value }))
+          }
         />
         <Input
           isAddress
           label='Buyer Address'
           id='buyerAddress'
-          defaultValue={data?.buyerAddress}
-          // value={inputValues.buyerAddress}
-          onChange={(e) => handleChange(e, "buyerAddress")}
+          defaultValue={currentBuyerData?.buyerAddress}
+          onInput={(e) =>
+            dispatch(
+              updateField({ key: "buyerAddress", value: e.target.value })
+            )
+          }
         />
         <div className='m-1 p-1'>
           <Input
             isAddress
             label='Type'
             id='type'
-            defaultValue={data?.type}
-            onChange={(e) => handleChange(e, "type")}
+            defaultValue={currentBuyerData?.type}
+            onInput={(e) =>
+              dispatch(updateField({ key: "type", value: e.target.value }))
+            }
           />
+          {/* SAVE/EDIT BUTTON */}
           <button
             className='mx-20 text-2xl hover:cursor-pointer'
-            onClick={handleSave}>
+            onClick={handleSaveFn}>
             {params.buyerName ? "📝" : "💾"}
           </button>
+          {/* DELETE BUTTON */}
           {params.buyerName && (
             <button
               className='mx-20 text-2xl hover:cursor-pointer'
-              onClick={handleDelete}>
+              onClick={handleDeleteFn}>
               🗑️
             </button>
           )}
@@ -138,24 +105,15 @@ export default function DataForm() {
       <div>
         <Seller
           num='1'
-          sellerData={data?.seller1}
-          inputValues={inputValues}
-          setInputValues={setInputValues}
-          handleChange={handleChange}
+          sellerData={currentBuyerData?.seller1}
         />
         <Seller
           num='2'
-          sellerData={data?.seller2}
-          inputValues={inputValues}
-          setInputValues={setInputValues}
-          handleChange={handleChange}
+          sellerData={currentBuyerData?.seller2}
         />
         <Seller
           num='3'
-          sellerData={data?.seller3}
-          inputValues={inputValues}
-          setInputValues={setInputValues}
-          handleChange={handleChange}
+          sellerData={currentBuyerData?.seller3}
         />
       </div>
     </form>

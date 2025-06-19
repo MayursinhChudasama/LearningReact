@@ -2,11 +2,13 @@ import { createBrowserRouter, RouterProvider } from "react-router";
 import DataForm from "./componenets/DataForm.jsx";
 import RootLayout from "./pages/RootLayout.jsx";
 import HomePage from "./pages/HomePage.jsx";
+import ErrorPage from "./pages/ErrorPage.jsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />,
+    errorElement: <ErrorPage />,
     children: [
       { index: true, element: <HomePage /> },
       { path: "new", element: <DataForm /> },
