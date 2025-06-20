@@ -16,6 +16,7 @@ const initialObj = {
       particulars: [],
       rate: [],
     },
+    invoiceData: "",
   },
   seller2: {
     layoutType: "layout2",
@@ -31,6 +32,7 @@ const initialObj = {
       particulars: [],
       rate: [],
     },
+    invoiceData: "",
   },
   seller3: {
     layoutType: "layout3",
@@ -46,8 +48,8 @@ const initialObj = {
       particulars: [],
       rate: [],
     },
+    invoiceData: "",
   },
-  invoiceData: "",
 };
 
 export default initialObj;

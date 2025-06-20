@@ -18,7 +18,7 @@ const allStyling = {
 };
 
 export default function generatePDFLayout1(inputValues) {
-  let invoiceData = invoiceDataFn(inputValues);
+  let invoiceData = inputValues.invoiceData;
 
   const doc = new jsPDF({
     unit: "mm",

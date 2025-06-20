@@ -1,0 +1,477 @@
+{
+  "buyerName": "Vaiyani Avesh",
+  "buyerAddress": "",
+  "type": "",
+  "seller1": {
+    "layoutType": "layout1",
+    "name": "AALFA TOOLS",
+    "address": "Royal Apartment, Bhavnagar Road, Rajkot, Gujarat. Phone: 8511196111",
+    "total": 150000,
+    "invoiceNoPrefix": "AT-",
+    "invoiceNoStart": 192,
+    "invoiceNoAdd": 87,
+    "dateStart": "2024-05-03",
+    "noOfParticulars": "",
+    "data": {
+      "particulars": [
+        "BUSHING SET",
+        "BRAKET 4\" ",
+        "12MM 8*6",
+        "HINGES 6X21X21 OM SS",
+        "VIRAT COL 5KG",
+        "18MM 8*4",
+        "BRAKET 8\" ",
+        "16MM 8*8",
+        "HINGES 3X19X19 OM SS",
+        "42*8 SCREW CSK",
+        "BRAKET 6\"",
+        "HANDLE 6\" FANCY SS",
+        "MAGNET 1 NO. (RAJ) ",
+        "46*8 SCREW CSK ",
+        "50*8 SCREW CSK"
+      ],
+      "rate": [
+        70, 325, 70, 420, 325, 900, 70, 100, 650, 420, 100, 135, 325, 420, 90
+      ]
+    },
+    "invoiceData": [
+      {
+        "no": "AT-279",
+        "date": "4/5/2024",
+        "particulars": [
+          "BUSHING SET",
+          "18MM 8*4",
+          "46*8 SCREW CSK ",
+          "MAGNET 1 NO. (RAJ) ",
+          "BRAKET 8\" ",
+          "HINGES 6X21X21 OM SS",
+          "VIRAT COL 5KG",
+          "42*8 SCREW CSK",
+          "HINGES 3X19X19 OM SS",
+          "BRAKET 6\"",
+          "16MM 8*8",
+          "12MM 8*6",
+          "HANDLE 6\" FANCY SS",
+          "50*8 SCREW CSK",
+          "BRAKET 4\" "
+        ],
+        "qty": [
+          33, 71, 10, 145, 23, 136, 26, 29, 23, 105, 33, 104, 94, 133, 14
+        ],
+        "rate": [
+          325, 135, 900, 70, 420, 70, 420, 325, 420, 100, 325, 90, 100, 70, 650
+        ],
+        "amount": [
+          10725, 9585, 9000, 10150, 9660, 9520, 10920, 9425, 9660, 10500, 10725,
+          9360, 9400, 9310, 9100
+        ],
+        "totalAmount": 147040
+      },
+      {
+        "no": "AT-366",
+        "date": "4/6/2024",
+        "particulars": [
+          "VIRAT COL 5KG",
+          "16MM 8*8",
+          "BUSHING SET",
+          "BRAKET 4\" ",
+          "12MM 8*6",
+          "BRAKET 6\"",
+          "18MM 8*4",
+          "46*8 SCREW CSK ",
+          "HINGES 3X19X19 OM SS",
+          "MAGNET 1 NO. (RAJ) ",
+          "HINGES 6X21X21 OM SS",
+          "HANDLE 6\" FANCY SS",
+          "BRAKET 8\" ",
+          "42*8 SCREW CSK"
+        ],
+        "qty": [165, 107, 31, 33, 34, 149, 79, 12, 28, 24, 116, 18, 165, 115],
+        "rate": [
+          70, 100, 325, 325, 325, 70, 135, 900, 420, 420, 90, 650, 70, 100
+        ],
+        "amount": [
+          11550, 10700, 10075, 10725, 11050, 10430, 10665, 10800, 11760, 10080,
+          10440, 11700, 11550, 11500
+        ],
+        "totalAmount": 153025
+      },
+      {
+        "no": "AT-453",
+        "date": "5/7/2024",
+        "particulars": [
+          "BRAKET 4\" ",
+          "BUSHING SET",
+          "HANDLE 6\" FANCY SS",
+          "BRAKET 8\" ",
+          "HINGES 3X19X19 OM SS",
+          "42*8 SCREW CSK",
+          "HINGES 6X21X21 OM SS",
+          "MAGNET 1 NO. (RAJ) ",
+          "16MM 8*8",
+          "12MM 8*6",
+          "18MM 8*4",
+          "BRAKET 6\"",
+          "46*8 SCREW CSK ",
+          "VIRAT COL 5KG",
+          "50*8 SCREW CSK"
+        ],
+        "qty": [
+          11, 26, 32, 103, 15, 131, 24, 78, 104, 29, 152, 31, 25, 99, 135
+        ],
+        "rate": [
+          900, 420, 325, 100, 650, 70, 420, 135, 90, 325, 70, 325, 420, 100, 70
+        ],
+        "amount": [
+          9900, 10920, 10400, 10300, 9750, 9170, 10080, 10530, 9360, 9425,
+          10640, 10075, 10500, 9900, 9450
+        ],
+        "totalAmount": 150400
+      },
+      {
+        "no": "AT-540",
+        "date": "5/8/2024",
+        "particulars": [
+          "50*8 SCREW CSK",
+          "BUSHING SET",
+          "46*8 SCREW CSK ",
+          "VIRAT COL 5KG",
+          "42*8 SCREW CSK",
+          "BRAKET 4\" ",
+          "16MM 8*8",
+          "HINGES 3X19X19 OM SS",
+          "HINGES 6X21X21 OM SS",
+          "MAGNET 1 NO. (RAJ) ",
+          "12MM 8*6",
+          "HANDLE 6\" FANCY SS",
+          "BRAKET 6\"",
+          "BRAKET 8\" ",
+          "18MM 8*4"
+        ],
+        "qty": [
+          23, 23, 28, 103, 137, 22, 11, 92, 145, 67, 101, 151, 30, 29, 15
+        ],
+        "rate": [
+          420, 420, 325, 100, 70, 420, 900, 100, 70, 135, 90, 70, 325, 325, 650
+        ],
+        "amount": [
+          9660, 9660, 9100, 10300, 9590, 9240, 9900, 9200, 10150, 9045, 9090,
+          10570, 9750, 9425, 9750
+        ],
+        "totalAmount": 144430
+      },
+      {
+        "no": "AT-627",
+        "date": "5/9/2024",
+        "particulars": [
+          "42*8 SCREW CSK",
+          "16MM 8*8",
+          "BUSHING SET",
+          "18MM 8*4",
+          "12MM 8*6",
+          "46*8 SCREW CSK ",
+          "HINGES 6X21X21 OM SS",
+          "BRAKET 8\" "
+        ],
+        "qty": [22, 57, 47, 139, 181, 258, 30, 45],
+        "rate": [900, 325, 420, 135, 100, 70, 650, 420],
+        "amount": [19800, 18525, 19740, 18765, 18100, 18060, 19500, 18900],
+        "totalAmount": 151390
+      },
+      {
+        "no": "AT-714",
+        "date": "8/10/2024",
+        "particulars": [
+          "42*8 SCREW CSK",
+          "MAGNET 1 NO. (RAJ) ",
+          "46*8 SCREW CSK ",
+          "16MM 8*8",
+          "BUSHING SET"
+        ],
+        "qty": [72, 306, 33, 322, 93],
+        "rate": [420, 100, 900, 90, 325],
+        "amount": [30240, 30600, 29700, 28980, 30225],
+        "totalAmount": 149745
+      },
+      {
+        "no": "AT-801",
+        "date": "17/11/2024",
+        "particulars": [
+          "BRAKET 6\"",
+          "VIRAT COL 5KG",
+          "HINGES 6X21X21 OM SS",
+          "42*8 SCREW CSK",
+          "50*8 SCREW CSK",
+          "12MM 8*6",
+          "BRAKET 4\" ",
+          "BRAKET 8\" ",
+          "18MM 8*4",
+          "MAGNET 1 NO. (RAJ) ",
+          "46*8 SCREW CSK ",
+          "HANDLE 6\" FANCY SS",
+          "BUSHING SET",
+          "16MM 8*8",
+          "HINGES 3X19X19 OM SS"
+        ],
+        "qty": [
+          69, 138, 26, 21, 15, 28, 109, 113, 92, 129, 21, 28, 156, 32, 12
+        ],
+        "rate": [
+          135, 70, 420, 420, 650, 325, 100, 90, 100, 70, 420, 325, 70, 325, 900
+        ],
+        "amount": [
+          9315, 9660, 10920, 8820, 9750, 9100, 10900, 10170, 9200, 9030, 8820,
+          9100, 10920, 10400, 10800
+        ],
+        "totalAmount": 146905
+      },
+      {
+        "no": "AT-888",
+        "date": "2/12/2024",
+        "particulars": [
+          "BRAKET 8\" ",
+          "VIRAT COL 5KG",
+          "HANDLE 6\" FANCY SS",
+          "BUSHING SET",
+          "50*8 SCREW CSK",
+          "18MM 8*4",
+          "46*8 SCREW CSK "
+        ],
+        "qty": [232, 52, 294, 51, 207, 52, 66],
+        "rate": [90, 420, 70, 420, 100, 420, 325],
+        "amount": [20880, 21840, 20580, 21420, 20700, 21840, 21450],
+        "totalAmount": 148710
+      },
+      {
+        "no": "AT-975",
+        "date": "7/1/2025",
+        "particulars": [
+          "BRAKET 8\" ",
+          "BUSHING SET",
+          "16MM 8*8",
+          "BRAKET 4\" ",
+          "18MM 8*4",
+          "12MM 8*6",
+          "HINGES 6X21X21 OM SS",
+          "MAGNET 1 NO. (RAJ) "
+        ],
+        "qty": [279, 145, 279, 56, 21, 28, 190, 256],
+        "rate": [70, 135, 70, 325, 900, 650, 100, 70],
+        "amount": [19530, 19575, 19530, 18200, 18900, 18200, 19000, 17920],
+        "totalAmount": 150855
+      },
+      {
+        "no": "AT-1062",
+        "date": "7/2/2025",
+        "particulars": [
+          "HINGES 6X21X21 OM SS",
+          "46*8 SCREW CSK ",
+          "12MM 8*6",
+          "BRAKET 6\"",
+          "16MM 8*8"
+        ],
+        "qty": [90, 417, 300, 33, 70],
+        "rate": [325, 70, 100, 900, 420],
+        "amount": [29250, 29190, 30000, 29700, 29400],
+        "totalAmount": 147540
+      },
+      {
+        "no": "AT-1149",
+        "date": "6/3/2025",
+        "particulars": [
+          "50*8 SCREW CSK",
+          "46*8 SCREW CSK ",
+          "BUSHING SET",
+          "16MM 8*8",
+          "BRAKET 8\" ",
+          "42*8 SCREW CSK",
+          "18MM 8*4",
+          "BRAKET 4\" ",
+          "VIRAT COL 5KG"
+        ],
+        "qty": [240, 237, 53, 18, 48, 163, 38, 228, 39],
+        "rate": [70, 70, 325, 900, 325, 100, 420, 70, 420],
+        "amount": [
+          16800, 16590, 17225, 16200, 15600, 16300, 15960, 15960, 16380
+        ],
+        "totalAmount": 147015
+      },
+      {
+        "no": "AT-1236",
+        "date": "4/4/2025",
+        "particulars": [
+          "18MM 8*4",
+          "VIRAT COL 5KG",
+          "HANDLE 6\" FANCY SS",
+          "HINGES 6X21X21 OM SS",
+          "12MM 8*6",
+          "HINGES 3X19X19 OM SS",
+          "MAGNET 1 NO. (RAJ) ",
+          "16MM 8*8",
+          "BRAKET 8\" ",
+          "50*8 SCREW CSK",
+          "BRAKET 4\" ",
+          "46*8 SCREW CSK ",
+          "BRAKET 6\"",
+          "BUSHING SET",
+          "42*8 SCREW CSK"
+        ],
+        "qty": [
+          129, 24, 104, 14, 25, 91, 30, 148, 22, 32, 12, 132, 28, 70, 102
+        ],
+        "rate": [
+          70, 420, 100, 650, 420, 100, 325, 70, 420, 325, 900, 70, 325, 135, 90
+        ],
+        "amount": [
+          9030, 10080, 10400, 9100, 10500, 9100, 9750, 10360, 9240, 10400,
+          10800, 9240, 9100, 9450, 9180
+        ],
+        "totalAmount": 145730
+      },
+      {
+        "no": "AT-1323",
+        "date": "10/5/2025",
+        "particulars": [
+          "18MM 8*4",
+          "50*8 SCREW CSK",
+          "BRAKET 8\" ",
+          "42*8 SCREW CSK",
+          "HINGES 3X19X19 OM SS",
+          "HINGES 6X21X21 OM SS",
+          "46*8 SCREW CSK ",
+          "MAGNET 1 NO. (RAJ) ",
+          "BRAKET 4\" ",
+          "16MM 8*8"
+        ],
+        "qty": [35, 34, 212, 45, 37, 49, 156, 207, 16, 219],
+        "rate": [420, 420, 70, 325, 420, 325, 100, 70, 900, 70],
+        "amount": [
+          14700, 14280, 14840, 14625, 15540, 15925, 15600, 14490, 14400, 15330
+        ],
+        "totalAmount": 149730
+      },
+      {
+        "no": "AT-1410",
+        "date": "7/6/2025",
+        "particulars": [
+          "12MM 8*6",
+          "HANDLE 6\" FANCY SS",
+          "18MM 8*4",
+          "HINGES 3X19X19 OM SS",
+          "HINGES 6X21X21 OM SS",
+          "BRAKET 8\" ",
+          "MAGNET 1 NO. (RAJ) ",
+          "46*8 SCREW CSK ",
+          "BRAKET 6\"",
+          "50*8 SCREW CSK",
+          "16MM 8*8",
+          "BRAKET 4\" ",
+          "VIRAT COL 5KG"
+        ],
+        "qty": [173, 114, 116, 29, 155, 84, 37, 38, 132, 16, 174, 35, 12],
+        "rate": [70, 100, 100, 420, 70, 135, 325, 325, 90, 650, 70, 325, 900],
+        "amount": [
+          12110, 11400, 11600, 12180, 10850, 11340, 12025, 12350, 11880, 10400,
+          12180, 11375, 10800
+        ],
+        "totalAmount": 150490
+      },
+      {
+        "no": "AT-1339",
+        "date": "23/10/2019",
+        "particulars": [
+          "50*8 SCREW CSK",
+          "BUSHING SET",
+          "MAGNET 1 NO. (RAJ) ",
+          "BRAKET 8\" ",
+          "BRAKET 4\" ",
+          "18MM 8*4",
+          "16MM 8*8",
+          "HANDLE 6\" FANCY SS",
+          "12MM 8*6",
+          "42*8 SCREW CSK",
+          "HINGES 6X21X21 OM SS",
+          "VIRAT COL 5KG",
+          "BRAKET 6\"",
+          "HINGES 3X19X19 OM SS",
+          "46*8 SCREW CSK "
+        ],
+        "qty": [
+          25, 32, 32, 153, 12, 31, 102, 70, 16, 135, 157, 23, 23, 109, 105
+        ],
+        "rate": [
+          420, 325, 325, 70, 900, 325, 100, 135, 650, 70, 70, 420, 420, 100, 90
+        ],
+        "amount": [
+          10500, 10400, 10400, 10710, 10800, 10075, 10200, 9450, 10400, 9450,
+          10990, 9660, 9660, 10900, 9450
+        ],
+        "totalAmount": 153045
+      },
+      {
+        "no": "AT-1084",
+        "date": "23/1/2021",
+        "particulars": [
+          "HINGES 6X21X21 OM SS",
+          "18MM 8*4",
+          "16MM 8*8",
+          "12MM 8*6",
+          "BRAKET 4\" ",
+          "BUSHING SET",
+          "BRAKET 8\" ",
+          "HANDLE 6\" FANCY SS",
+          "42*8 SCREW CSK",
+          "HINGES 3X19X19 OM SS",
+          "46*8 SCREW CSK ",
+          "MAGNET 1 NO. (RAJ) ",
+          "VIRAT COL 5KG",
+          "BRAKET 6\"",
+          "50*8 SCREW CSK"
+        ],
+        "qty": [
+          146, 71, 28, 106, 10, 33, 154, 14, 109, 25, 26, 23, 34, 152, 120
+        ],
+        "rate": [
+          70, 135, 325, 100, 900, 325, 70, 650, 100, 420, 420, 420, 325, 70, 90
+        ],
+        "amount": [
+          10220, 9585, 9100, 10600, 9000, 10725, 10780, 9100, 10900, 10500,
+          10920, 9660, 11050, 10640, 10800
+        ],
+        "totalAmount": 153580
+      }
+    ]
+  },
+  "seller2": {
+    "layoutType": "layout2",
+    "name": "",
+    "address": "",
+    "total": "",
+    "invoiceNoPrefix": "",
+    "invoiceNoStart": "",
+    "invoiceNoAdd": "",
+    "dateStart": "",
+    "noOfParticulars": "",
+    "data": {
+      "particulars": [],
+      "rate": []
+    },
+    "invoiceData": ""
+  },
+  "seller3": {
+    "layoutType": "layout3",
+    "name": "",
+    "address": "",
+    "total": "",
+    "invoiceNoPrefix": "",
+    "invoiceNoStart": "",
+    "invoiceNoAdd": "",
+    "dateStart": "",
+    "noOfParticulars": "",
+    "data": {
+      "particulars": [],
+      "rate": []
+    },
+    "invoiceData": ""
+  }
+}

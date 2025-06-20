@@ -2,9 +2,6 @@ import { useEffect, useState } from "react";
 import { useLoaderData, useNavigate, useParams } from "react-router";
 import Input from "./Input";
 import Seller from "./Seller";
-
-import { getData, genInvoiceDataObj } from "../store/storage";
-import { invoiceDataFn } from "../utils/invoiceData";
 import { useDispatch, useSelector } from "react-redux";
 import dataSlice from "../store/dataSlice";
 import storageSlice from "../store/storageSlice";
@@ -16,16 +13,27 @@ export default function DataForm() {
   const navigate = useNavigate();
   const params = useParams();
 
-  const { updateField, updateCurrentBuyer } = dataSlice.actions;
-  const { handleSave, handleDelete } = storageSlice.actions;
-
-  useEffect(() => {
-    console.log("inputValues from store:--", inputValues);
-  }, [inputValues]);
+  const { updateField, updateForm } = dataSlice.actions;
+  // dispatch(resetState());
+  const { handleSaveStorage, handleDelete } = storageSlice.actions;
 
   const currentBuyerData = storedBuyerListData.find(
-    (buyer) => buyer.buyerName == params?.buyerName
+    (buyer) => buyer?.buyerName == params?.buyerName
   );
+  useEffect(() => {
+    if (currentBuyerData) {
+      dispatch(updateForm({ currentBuyerData }));
+    }
+  }, [currentBuyerData]);
+  //
+  //
+  useEffect(() => {
+    console.log("from store:--");
+    console.log("inputValues->", inputValues);
+    console.log("currentBuyerData->", currentBuyerData);
+    console.log("storedBuyerListData->", storedBuyerListData);
+    console.log("from store:--");
+  }, [inputValues, storedBuyerListData]);
 
   // handleDeleteFn;
   function handleDeleteFn() {
@@ -40,19 +48,19 @@ export default function DataForm() {
   }
   // handleSaveFn
   function handleSaveFn() {
-    const index = storedBuyerListData.findIndex(
-      (buyer) => buyer.buyerName == params?.buyerName
-    );
-    const payload = {
-      currentBuyerData,
-      index,
-      updatedCurrentBuyer: inputValues,
-    };
-    // dispatch(updateCurrentBuyer(currentBuyerData));
-    dispatch(handleSave(payload));
-    console.log("inputValues***", inputValues);
-
-    navigate("..");
+    const result = confirm("Are you sure?");
+    if (result) {
+      const index = storedBuyerListData.findIndex(
+        (buyer) => buyer.buyerName == params?.buyerName
+      );
+      const payload = {
+        currentBuyerData,
+        index,
+        updatedCurrentBuyer: inputValues,
+      };
+      dispatch(handleSaveStorage(payload));
+      navigate("..");
+    }
   }
 
   // componenet Return
@@ -68,11 +76,11 @@ export default function DataForm() {
           label='Buyer Name'
           id='buyerName'
           defaultValue={currentBuyerData?.buyerName}
-          onInput={(e) =>
+          onChange={(e) =>
             dispatch(
               updateField({
                 key: "buyerName",
-                value: e.target.value,
+                value: e.target.value.trim() || " ",
                 currentBuyerData,
               })
             )
@@ -83,11 +91,11 @@ export default function DataForm() {
           label='Buyer Address'
           id='buyerAddress'
           defaultValue={currentBuyerData?.buyerAddress}
-          onInput={(e) =>
+          onChange={(e) =>
             dispatch(
               updateField({
                 key: "buyerAddress",
-                value: e.target.value,
+                value: e.target.value.trim(),
                 currentBuyerData,
               })
             )
@@ -103,7 +111,7 @@ export default function DataForm() {
               dispatch(
                 updateField({
                   key: "type",
-                  value: e.target.value,
+                  value: e.target.value.trim(),
                   currentBuyerData,
                 })
               )

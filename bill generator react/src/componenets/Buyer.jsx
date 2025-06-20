@@ -12,7 +12,7 @@ export default function Buyer({ buyer }) {
         <p className='text-sm'>{buyer?.seller3.name}</p>
       </div>
 
-      <p className='text-sm font-medium mb-1'>'Type'</p>
+      <p className='text-sm font-medium mb-1'>{buyer?.type || ""}</p>
       <div>
         <p className='text-xs text-gray-400'>'Date' </p>
         <span></span>

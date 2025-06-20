@@ -5,8 +5,8 @@ import generatePDFLayout2 from "../utils/generatePDFLayout2.js";
 import generatePDFLayout3 from "../utils/generatePDFLayout3.js";
 import { useDispatch, useSelector } from "react-redux";
 import dataSlice from "../store/dataSlice.js";
-import storageSlice from "../store/storageSlice.js";
 import { useParams } from "react-router";
+import { invoiceDataFn } from "../utils/invoiceData.js";
 
 const cssClass = `bg-[#4A4A4A] text-[#F5F5F5] border-1 border-[#2F2F2F] focus:border-[#3B82F6] focus:outline-none focus:ring-2 focus:ring-[#3B82F6]/50 p-1 m-1 `;
 
@@ -16,7 +16,6 @@ export default function Seller({ sellerData, num }) {
   const params = useParams();
   const dispatch = useDispatch();
   const [hide, setShow] = useState(false);
-
   const { updateField, saveInvoiceData } = dataSlice.actions;
   // const { saveInvoiceData } = storageSlice.actions;
   function handleParticulars() {
@@ -32,18 +31,59 @@ export default function Seller({ sellerData, num }) {
   }
   const noOfParticulars = handleParticulars();
 
-  const currentBuyerData = storedBuyerListData.find(
+  const storedBuyerListDataCopy = JSON.parse(
+    JSON.stringify(storedBuyerListData)
+  );
+
+  const currentBuyerData = storedBuyerListDataCopy.find(
     (buyer) => buyer.buyerName == params?.buyerName
   );
 
-  function handleSaveFn() {
-    // transform inputValues into InvoiceData
-    // const invoiceData =
+  function handleSaveDataOnlyFn() {
+    console.log("this is Seller Save Button");
+    //
     dispatch(
-      saveInvoiceData({ inputValues, seller: inputValues[`seller${num}`] })
+      saveInvoiceData({
+        inputValues,
+        num,
+        currentBuyerData,
+      })
     );
-    console.log("inputValues-->", currentBuyerData || inputValues);
-    // console.log("invoiceData", invoiceData);
+  }
+  //
+  function handleGenereatePDF() {
+    if (!inputValues[`seller${num}`].invoiceData) {
+      alert("Generate data first by clicking on Save Data only");
+      return;
+    }
+    let seller = inputValues[`seller${num}`];
+    const FINAL_DATA_FOR_PDF = {
+      layoutType: seller.layoutType,
+      buyerName: inputValues.buyerName,
+      buyerAddress: inputValues.buyerAddress,
+      sellerName: seller.name,
+      sellerAddress: seller.address,
+      invoiceNoPrefix: seller.invoiceNoPrefix,
+      invoiceNoStart: seller.invoiceNoStart,
+      invoiceNoAdd: seller.invoiceNoAdd,
+      dateStart: seller.dateStart,
+      total: seller.total,
+      noOfParticulars: seller.noOfParticulars,
+      data: {
+        particulars: seller.data.particulars,
+        rate: seller.data.rate,
+      },
+      invoiceData: seller.invoiceData,
+    };
+    console.log("FINAL_DATA_FOR_PDF***", FINAL_DATA_FOR_PDF);
+
+    if (seller.layoutType === "layout1") {
+      generatePDFLayout1(FINAL_DATA_FOR_PDF);
+    } else if (seller.layoutType === "layout2") {
+      generatePDFLayout2(FINAL_DATA_FOR_PDF);
+    } else if (seller.layoutType === "layout3") {
+      generatePDFLayout3(FINAL_DATA_FOR_PDF);
+    }
   }
   // old
   //
@@ -76,8 +116,9 @@ export default function Seller({ sellerData, num }) {
               dispatch(
                 updateField({
                   key: "layoutType",
-                  value: e.target.value,
+                  value: e.target.value.trim(),
                   num,
+                  currentBuyerData,
                 })
               );
             }}>
@@ -99,23 +140,15 @@ export default function Seller({ sellerData, num }) {
           </select>
           {/* GENERATE BUTTON */}
           <button
-            onClick={() => {
-              // if (inputValues.layoutType === "layout1") {
-              //   generatePDFLayout1(inputValues);
-              // } else if (inputValues.layoutType === "layout2") {
-              //   generatePDFLayout2(inputValues);
-              // } else if (inputValues.layoutType === "layout3") {
-              //   generatePDFLayout3(inputValues);
-              // }
-            }}
+            onClick={handleGenereatePDF}
             className='p-2 m-2 border-1 hover:cursor-pointer'>
-            Generate
+            Generate PDF
           </button>
           {/* SAVE BUTTON */}
           <button
-            className='mx-20 text-2xl hover:cursor-pointer'
-            onClick={handleSaveFn}>
-            💾
+            className='mx-10 p-2 m-2 border-1 hover:cursor-pointer'
+            onClick={handleSaveDataOnlyFn}>
+            Save Data Only
           </button>
 
           {/* SELLER DETAILS */}
@@ -128,8 +161,9 @@ export default function Seller({ sellerData, num }) {
                 dispatch(
                   updateField({
                     key: "name",
-                    value: e.target.value,
+                    value: e.target.value.trim() || "",
                     num,
+                    currentBuyerData,
                   })
                 );
               }}
@@ -143,8 +177,9 @@ export default function Seller({ sellerData, num }) {
                 dispatch(
                   updateField({
                     key: "address",
-                    value: e.target.value,
+                    value: e.target.value.trim() || "",
                     num,
+                    currentBuyerData,
                   })
                 );
               }}
@@ -160,8 +195,9 @@ export default function Seller({ sellerData, num }) {
                 dispatch(
                   updateField({
                     key: "invoiceNoPrefix",
-                    value: e.target.value,
+                    value: e.target.value.trim() || "",
                     num,
+                    currentBuyerData,
                   })
                 );
               }}
@@ -174,8 +210,9 @@ export default function Seller({ sellerData, num }) {
                 dispatch(
                   updateField({
                     key: "invoiceNoStart",
-                    value: e.target.value,
+                    value: Number(e.target.value) || 0,
                     num,
+                    currentBuyerData,
                   })
                 );
               }}
@@ -188,8 +225,9 @@ export default function Seller({ sellerData, num }) {
                 dispatch(
                   updateField({
                     key: "invoiceNoAdd",
-                    value: e.target.value,
+                    value: Number(e.target.value) || 0,
                     num,
+                    currentBuyerData,
                   })
                 );
               }}
@@ -206,8 +244,9 @@ export default function Seller({ sellerData, num }) {
                 dispatch(
                   updateField({
                     key: "dateStart",
-                    value: e.target.value,
+                    value: e.target.value || "",
                     num,
+                    currentBuyerData,
                   })
                 );
               }}
@@ -220,15 +259,16 @@ export default function Seller({ sellerData, num }) {
                 dispatch(
                   updateField({
                     key: "total",
-                    value: e.target.value,
+                    value: Number(e.target.value) || 0,
                     num,
+                    currentBuyerData,
                   })
                 );
               }}
             />
           </div>
           {/* PARTICUARS */}
-          <div>
+          {/* <div>
             <Input
               label='No of Particulars'
               id='noOfParticulars'
@@ -237,13 +277,13 @@ export default function Seller({ sellerData, num }) {
                 dispatch(
                   updateField({
                     key: "noOfParticulars",
-                    value: e.target.value,
+                    value: Number(e.target.value) || noOfParticulars,
                     num,
                   })
                 );
               }}
             />
-          </div>
+          </div> */}
           {Array.from({ length: noOfParticulars || 0 }).map((item, i) => {
             return (
               <div key={i}>
@@ -252,14 +292,15 @@ export default function Seller({ sellerData, num }) {
                   className={cssClass + " w-100"}
                   type='text'
                   // value={inputValues.sellerData.particulars[i]}
-                  defaultValue={sellerData?.sellerData?.particulars[i]}
+                  defaultValue={sellerData?.data?.particulars[i] ?? ""}
                   onInput={(e) => {
                     dispatch(
                       updateField({
                         key: "particulars",
-                        value: e.target.value,
+                        value: e.target.value.trim() ?? "",
                         num,
                         i,
+                        currentBuyerData,
                       })
                     );
                   }}
@@ -270,14 +311,15 @@ export default function Seller({ sellerData, num }) {
                   className={cssClass}
                   type='text'
                   // value={inputValues.sellerData.rate[i]}
-                  defaultValue={sellerData?.sellerData?.rate[i]}
+                  defaultValue={sellerData?.data?.rate[i] ?? ""}
                   onInput={(e) => {
                     dispatch(
                       updateField({
                         key: "rate",
-                        value: e.target.value,
+                        value: Number(e.target.value) ?? 0,
                         num,
                         i,
+                        currentBuyerData,
                       })
                     );
                   }}

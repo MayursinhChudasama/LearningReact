@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router";
 import DataForm from "./componenets/DataForm.jsx";
 import RootLayout from "./pages/RootLayout.jsx";
-import HomePage from "./pages/HomePage.jsx";
+import HomePage, { resetState } from "./pages/HomePage.jsx";
 import ErrorPage from "./pages/ErrorPage.jsx";
 
 const router = createBrowserRouter([
@@ -10,7 +10,7 @@ const router = createBrowserRouter([
     element: <RootLayout />,
     errorElement: <ErrorPage />,
     children: [
-      { index: true, element: <HomePage /> },
+      { index: true, element: <HomePage />, loader: resetState },
       { path: "new", element: <DataForm /> },
       { path: ":buyerName", element: <DataForm /> },
     ],

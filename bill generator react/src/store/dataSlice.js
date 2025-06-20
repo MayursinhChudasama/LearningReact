@@ -1,15 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import initialObj from "./initialObj";
 import { invoiceDataFn } from "../utils/invoiceData";
-import { useSelector } from "react-redux";
-import { useParams } from "react-router";
-
-// const storedBuyerListData = useSelector((store) => store.storage);
-// const params = useParams();
-// const currentBuyerData = storedBuyerListData.find(
-//   (buyer) => buyer.buyerName == params?.buyerName
-// );
-// console.log(currentBuyerData);
 
 const dataSliceInitialState = { ...initialObj };
 
@@ -18,35 +9,42 @@ const dataSlice = createSlice({
   initialState: dataSliceInitialState,
   reducers: {
     //
-    updateField(state, action) {
-      let { key, value, i, num, currentBuyerData } = action.payload;
-      console.log("currentBuyerData", currentBuyerData);
-      //
+    resetState(state, action) {
+      Object.assign(state, initialObj);
+    },
+    updateForm(state, action) {
+      let { currentBuyerData } = action.payload;
       if (currentBuyerData) {
-        state.buyerName = currentBuyerData.buyerName;
-        state.buyerAddress = currentBuyerData.buyerAddress;
-        state.seller1 = currentBuyerData.seller1;
-        state.seller2 = currentBuyerData.seller2;
-        state.seller3 = currentBuyerData.seller3;
+        state.buyerName = currentBuyerData?.buyerName;
+        state.buyerAddress = currentBuyerData?.buyerAddress;
+        state.type = currentBuyerData?.type;
+        state.seller1 = { ...currentBuyerData.seller1 };
+        state.seller2 = { ...currentBuyerData.seller2 };
+        state.seller3 = { ...currentBuyerData.seller3 };
       }
+    },
+    //
+    updateField(state, action) {
+      let { key, value, i, num } = action.payload;
       //
+
       if (key === "rate") {
         value = Number(value);
       }
       if (key === "buyerName" || key === "buyerAddress" || key === "type") {
         state[key] = value;
       } else if (key === "particulars" || key === "rate") {
-        state[`seller${num}`].data[key][i] = value || 0;
+        console.log("ting");
+        state[`seller${num}`].data[key][i] = value;
       } else {
         state[`seller${num}`][key] = value;
       }
     },
-    updateCurrentBuyer(state, action) {
-      const currentBuyerData = action.payload;
-      state = { ...currentBuyerData };
-    },
+
     saveInvoiceData(state, action) {
-      const { inputValues, seller } = action.payload;
+      let { inputValues, num} = action.payload;
+     
+      let seller = inputValues[`seller${num}`];
       const data = {
         layoutType: seller.layoutType,
         buyerName: inputValues.buyerName,
@@ -65,7 +63,9 @@ const dataSlice = createSlice({
         },
       };
       const invoiceData = invoiceDataFn(data);
-      state.invoiceData = invoiceData;
+
+      console.log("invoiceData after", invoiceData);
+      state[`seller${num}`].invoiceData = invoiceData;
     },
   },
 });
