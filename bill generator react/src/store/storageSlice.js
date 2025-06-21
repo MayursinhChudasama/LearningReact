@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import defaultBuyerListData from "../store/storage.js";
 
-let storedBuyerListData = [];
+let storedBuyerListData = [];                                       
 
 try {
   const raw = localStorage.getItem("buyers");

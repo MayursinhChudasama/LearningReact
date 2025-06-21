@@ -19,7 +19,7 @@ export default function DataForm() {
 
   const currentBuyerData = storedBuyerListData.find(
     (buyer) => buyer?.buyerName == params?.buyerName
-  );
+  );                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
   useEffect(() => {
     if (currentBuyerData) {
       dispatch(updateForm({ currentBuyerData }));
@@ -27,13 +27,13 @@ export default function DataForm() {
   }, [currentBuyerData]);
   //
   //
-  useEffect(() => {
-    console.log("from store:--");
-    console.log("inputValues->", inputValues);
-    console.log("currentBuyerData->", currentBuyerData);
-    console.log("storedBuyerListData->", storedBuyerListData);
-    console.log("from store:--");
-  }, [inputValues, storedBuyerListData]);
+  // useEffect(() => {
+  //   console.log("from store:--");
+  //   console.log("inputValues->", inputValues);
+  //   console.log("currentBuyerData->", currentBuyerData);
+  //   console.log("storedBuyerListData->", storedBuyerListData);
+  //   console.log("from store:--");
+  // }, [inputValues, storedBuyerListData]);
 
   // handleDeleteFn;
   function handleDeleteFn() {
