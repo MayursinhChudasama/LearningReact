@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import defaultBuyerListData from "../store/storage.js";
 
-let storedBuyerListData = [];                                       
+let storedBuyerListData = [];
 
 try {
   const raw = localStorage.getItem("buyers");
@@ -14,6 +14,14 @@ const storageSliceInitialState =
   storedBuyerListData.length > 0
     ? JSON.parse(JSON.stringify(storedBuyerListData))
     : defaultBuyerListData;
+
+async function fetchData() {
+  const listData = await fetch("http://localhost:3001/events");
+  const resData = await listData.json();
+  return resData;
+}
+const listData = await fetchData();
+console.log(listData);
 
 const storageSlice = createSlice({
   name: "storage",
@@ -31,7 +39,7 @@ const storageSlice = createSlice({
       }
       localStorage.setItem("buyers", JSON.stringify(state));
     },
-    
+
     handleDelete(state, action) {
       const { updatedState } = action.payload;
       localStorage.setItem("buyers", JSON.stringify(updatedState));

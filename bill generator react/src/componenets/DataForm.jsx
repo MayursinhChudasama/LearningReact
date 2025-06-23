@@ -19,7 +19,7 @@ export default function DataForm() {
 
   const currentBuyerData = storedBuyerListData.find(
     (buyer) => buyer?.buyerName == params?.buyerName
-  );                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+  );
   useEffect(() => {
     if (currentBuyerData) {
       dispatch(updateForm({ currentBuyerData }));

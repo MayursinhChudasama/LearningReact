@@ -53,3 +53,14 @@ const initialObj = {
 };
 
 export default initialObj;
+
+async function sendData() {
+  const data = await fetch("http://localhost:3001/events", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(initialObj),
+  });
+}
+// await sendData();
