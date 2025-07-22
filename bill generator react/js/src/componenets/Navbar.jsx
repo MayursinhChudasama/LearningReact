@@ -1,8 +1,6 @@
-import { Link, useParams } from "react-router";
+import { Link } from "react-router";
 
 export default function Navbar() {
-  const params = useParams();
-
   return (
     <nav className='m-2 p-2 flex justify-between items-center'>
       <div className=''>
