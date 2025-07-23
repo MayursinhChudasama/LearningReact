@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
 import type { buyer } from "../Models/buyer";
 import BuyerCard from "../components/BuyerCard";
-import { dummyBuyers } from "../utils/dummyBuyers";
+import { useFetchDataQuery } from "../store/dataApi";
 
 const HomePage: React.FC = () => {
-  const buyerList: buyer[] = dummyBuyers;
+  const { data: buyerListData } = useFetchDataQuery({});
+  console.log("buyerListData", buyerListData);
 
   return (
     <>
@@ -16,7 +17,7 @@ const HomePage: React.FC = () => {
         </Link>
       </div>
       <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-4 max-w-7xl mx-auto'>
-        {buyerList.map((buyer) => (
+        {buyerListData?.map((buyer: buyer) => (
           <Link
             to={buyer.buyerName.trim()}
             key={buyer.buyerName}

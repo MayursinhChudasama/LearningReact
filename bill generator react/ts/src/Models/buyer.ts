@@ -5,6 +5,20 @@ interface data {
   rate: string[];
 }
 
+export interface seller {
+  layoutType: layoutType;
+  name: string;
+  address: string;
+  total: string;
+  invoiceNoPrefix: string;
+  invoiceNoStart: string;
+  invoiceNoAdd: string;
+  dateStart: string;
+  noOfParticulars: string;
+  data: data;
+  invoiceData: singleInvoiceData[];
+}
+
 export interface singleInvoiceData {
   no: string;
   date: string;
@@ -19,43 +33,7 @@ export interface buyer {
   buyerName: string;
   buyerAddress: string;
   type: string;
-  seller1: {
-    layoutType: layoutType;
-    name: string;
-    address: string;
-    total: string;
-    invoiceNoPrefix: string;
-    invoiceNoStart: string;
-    invoiceNoAdd: string;
-    dateStart: string;
-    noOfParticulars: string;
-    data: data;
-    invoiceData: singleInvoiceData[];
-  };
-  seller2: {
-    layoutType: layoutType;
-    name: string;
-    address: string;
-    total: string;
-    invoiceNoPrefix: string;
-    invoiceNoStart: string;
-    invoiceNoAdd: string;
-    dateStart: string;
-    noOfParticulars: string;
-    data: data;
-    invoiceData: singleInvoiceData[];
-  };
-  seller3: {
-    layoutType: layoutType;
-    name: string;
-    address: string;
-    total: string;
-    invoiceNoPrefix: string;
-    invoiceNoStart: string;
-    invoiceNoAdd: string;
-    dateStart: string;
-    noOfParticulars: string;
-    data: data;
-    invoiceData: singleInvoiceData[];
-  };
+  seller1: seller;
+  seller2: seller;
+  seller3: seller;
 }
