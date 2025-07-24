@@ -8,7 +8,7 @@ interface InputProps {
 }
 
 const Input: React.FC<{ obj: InputProps }> = ({ obj }) => {
-  const { isAddress, id, type, label, ...props } = obj;
+  const { isAddress, id, type, label, defaultValue, ...props } = obj;
   let width = " w-50";
   if (isAddress) {
     width = " w-175";
@@ -20,6 +20,7 @@ const Input: React.FC<{ obj: InputProps }> = ({ obj }) => {
         id={id}
         name={id}
         placeholder=''
+        defaultValue={defaultValue}
         {...props}
         className={
           "peer border-b-2 border-gray-300 focus:outline-none focus:border-[#e87f05] bg-transparent mt-8 pb-2 " +

@@ -7,11 +7,11 @@ import Input from "./Input";
 import dataSlice from "../store/dataSlice";
 import { useFetchDataQuery } from "../store/dataApi";
 
-const cssClass = `bg-[#4A4A4A] text-[#F5F5F5] border-1 border-[#2F2F2F] focus:border-[#3B82F6] focus:outline-none focus:ring-2 focus:ring-[#3B82F6]/50 p-1 m-1 `;
+const cssClass = `bg-[#4A4A4A] text-[#F5F5F5] border-1 border-[#2F2F2F] focus:border-[#e87f05] focus:outline-none focus:ring-2 focus:ring-[#e87f05]/50 p-1 m-1 `;
 
-const Seller: React.FC<{ sellerData?: seller; num: number }> = ({
-  sellerData,
+const Seller: React.FC<{ num: number; currentBuyerData?: buyer }> = ({
   num,
+  currentBuyerData,
 }) => {
   const dispatch = useDispatch();
   const params = useParams();
@@ -22,20 +22,31 @@ const Seller: React.FC<{ sellerData?: seller; num: number }> = ({
 
   const { updateField, saveInvoiceData } = dataSlice.actions;
 
-  const storedBuyerListDataCopy = JSON.parse(JSON.stringify(buyerListData));
+  //   const storedBuyerListDataCopy = JSON.parse(JSON.stringify(buyerListData));
 
-  const currentBuyerData = storedBuyerListDataCopy?.find(
-    (buyer: buyer) => buyer.buyerName == params?.buyerName
-  );
   console.log("currentBuyerData", currentBuyerData);
+
+  function getSellerByNumber(
+    buyer: buyer | undefined,
+    num: number
+  ): seller | undefined {
+    if (!buyer) return undefined;
+    if (num === 1) return buyer.seller1;
+    if (num === 2) return buyer.seller2;
+    if (num === 3) return buyer.seller3;
+    return undefined;
+  }
+
+  const sellerData = getSellerByNumber(currentBuyerData, num);
+  console.log("sellerData", sellerData);
 
   function handleParticulars() {
     let noOfParticulars = 0;
-    if (inputValues[`seller${num}`]?.layoutType === "layout1") {
+    if (sellerData?.layoutType === "layout1") {
       noOfParticulars = 15;
-    } else if (inputValues[`seller${num}`]?.layoutType === "layout2") {
+    } else if (sellerData?.layoutType === "layout2") {
       noOfParticulars = 12;
-    } else if (inputValues[`seller${num}`]?.layoutType === "layout3") {
+    } else if (sellerData?.layoutType === "layout3") {
       noOfParticulars = 13;
     }
     return noOfParticulars;
@@ -45,7 +56,7 @@ const Seller: React.FC<{ sellerData?: seller; num: number }> = ({
   return (
     <>
       {/* SELLER DETAILS */}
-      <div>
+      <div className='flex gap-2'>
         <Input
           obj={{
             label: "Seller Name",
@@ -174,49 +185,47 @@ const Seller: React.FC<{ sellerData?: seller; num: number }> = ({
           }}
         />
       </div>
-      {Array.from({ length: noOfParticulars || 0 }).map((item, i) => {
-        return (
-          <div key={i}>
-            <label className='p-1 m-1'>{"P-" + Number(i + 1)}</label>
-            <input
-              className={cssClass + " w-100"}
-              type='text'
-              // value={inputValues.sellerData.particulars[i]}
-              defaultValue={sellerData?.data?.particulars[i] ?? ""}
-              onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-                dispatch(
-                  updateField({
-                    key: "particulars",
-                    value: e.target.value.trim() ?? "",
-                    num,
-                    i,
-                    currentBuyerData,
-                  })
-                );
-              }}
-            />
+      {Array.from({ length: noOfParticulars || 0 }).map((item, i) => (
+        <div key={i}>
+          <label className='p-1 m-1'>
+            {"P-" + (i + 1).toString().padStart(2, "0")}
+          </label>
+          <input
+            className={cssClass + " w-100"}
+            type='text'
+            defaultValue={sellerData?.data?.particulars[i] ?? ""}
+            onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+              dispatch(
+                updateField({
+                  key: "particulars",
+                  value: e.target.value.trim() ?? "",
+                  num,
+                  i,
+                  currentBuyerData,
+                })
+              );
+            }}
+          />
 
-            <label className='p-1 m-1'>Rate</label>
-            <input
-              className={cssClass}
-              type='text'
-              // value={inputValues.sellerData.rate[i]}
-              defaultValue={sellerData?.data?.rate[i] ?? ""}
-              onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-                dispatch(
-                  updateField({
-                    key: "rate",
-                    value: Number(e.target.value) ?? 0,
-                    num,
-                    i,
-                    currentBuyerData,
-                  })
-                );
-              }}
-            />
-          </div>
-        );
-      })}
+          <label className='p-1 m-1'>Rate</label>
+          <input
+            className={cssClass}
+            type='number'
+            defaultValue={sellerData?.data?.rate[i]}
+            onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+              dispatch(
+                updateField({
+                  key: "rate",
+                  value: Number(e.target.value) ?? 0,
+                  num,
+                  i,
+                  currentBuyerData,
+                })
+              );
+            }}
+          />
+        </div>
+      ))}
     </>
   );
 };

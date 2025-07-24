@@ -489,6 +489,106 @@
         },
         "invoiceData": ""
       }
+    },
+    {
+      "buyerName": "Tech Solutions Inc.",
+      "buyerAddress": "123 Tech Park, Silicon Valley, CA 94025",
+      "type": "Wholesale",
+      "seller1": {
+        "layoutType": "layout1",
+        "name": "Global Electronics",
+        "address": "456 Circuit Drive, San Jose, CA 95134. Phone: (408) 555-0199",
+        "total": 125000,
+        "invoiceNoPrefix": "GE-",
+        "invoiceNoStart": 1001,
+        "invoiceNoAdd": 1,
+        "dateStart": "2025-01-15",
+        "data": {
+          "particulars": [
+            "Laptop i7 16GB",
+            "4K Monitor 27\"",
+            "Wireless Keyboard",
+            "Bluetooth Mouse",
+            "USB-C Hub",
+            "External SSD 1TB",
+            "Webcam 1080p",
+            "Noise Cancelling Headphones",
+            "Ergonomic Chair",
+            "Adjustable Desk",
+            "Monitor Arm",
+            "Laptop Stand",
+            "Wireless Earbuds",
+            "Power Bank 20000mAh",
+            "USB-C Cable"
+          ],
+          "rate": [
+            1200, 350, 80, 45, 65, 120, 90, 250, 300, 450, 120, 60, 150, 50, 25
+          ]
+        },
+        "invoiceData": []
+      },
+      "seller2": {
+        "layoutType": "layout2",
+        "name": "Office Supplies Plus",
+        "address": "789 Business Ave, San Francisco, CA 94103. Phone: (415) 555-0123",
+        "total": 75000,
+        "invoiceNoPrefix": "OSP-",
+        "invoiceNoStart": 2001,
+        "invoiceNoAdd": 1,
+        "dateStart": "2025-01-10",
+        "data": {
+          "particulars": [
+            "Notebook Set",
+            "Premium Pens (12pk)",
+            "Sticky Notes",
+            "File Folders",
+            "Desk Organizer",
+            "Whiteboard 4x6ft",
+            "Markers Set",
+            "Paper Clips (1000pc)",
+            "Stapler",
+            "Staples (1000pc)",
+            "Tape Dispenser",
+            "Scissors",
+            "Calculator",
+            "Desk Lamp",
+            "Calendar 2025"
+          ],
+          "rate": [25, 15, 8, 12, 35, 120, 25, 10, 20, 5, 15, 12, 30, 45, 20]
+        },
+        "invoiceData": []
+      },
+      "seller3": {
+        "layoutType": "layout3",
+        "name": "Cafe Supplies Co.",
+        "address": "321 Brew Street, Oakland, CA 94612. Phone: (510) 555-0187",
+        "total": 50000,
+        "invoiceNoPrefix": "CSC-",
+        "invoiceNoStart": 3001,
+        "invoiceNoAdd": 1,
+        "dateStart": "2025-01-05",
+        "data": {
+          "particulars": [
+            "Coffee Beans (5lb)",
+            "Paper Cups (100ct)",
+            "Lids (100ct)",
+            "Sleeves (100ct)",
+            "Sugar Packets (100ct)",
+            "Stirrers (100ct)",
+            "Napkins (250ct)",
+            "Coffee Filters",
+            "Syrup Pump",
+            "Milk Frother",
+            "Thermal Carafe",
+            "Espresso Cups",
+            "Dessert Plates",
+            "Cake Stand",
+            "Display Case"
+          ],
+          "rate": [40, 15, 8, 10, 8, 5, 12, 20, 15, 35, 45, 30, 25, 65, 120]
+        },
+        "invoiceData": []
+      }
     }
   ]
 }

@@ -9,7 +9,13 @@ const dataSlice = createSlice({
   name: "data",
   initialState: dataSliceInitialState,
   reducers: {
-    //
+    // Save the entire form data
+    saveForm(state, action) {
+      const { formData } = action.payload;
+      if (formData) {
+        Object.assign(state, formData);
+      }
+    },
     resetState(state, action) {
       Object.assign(state, initialState);
     },
