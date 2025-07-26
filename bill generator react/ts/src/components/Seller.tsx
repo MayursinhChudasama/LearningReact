@@ -22,7 +22,7 @@ const Seller: React.FC<{ num: number; currentBuyerData?: buyer }> = ({
 
   const { updateField, saveInvoiceData } = dataSlice.actions;
 
-  //   const storedBuyerListDataCopy = JSON.parse(JSON.stringify(buyerListData));
+    const storedBuyerListDataCopy = JSON.parse(JSON.stringify(buyerListData));
 
   console.log("currentBuyerData", currentBuyerData);
 
