@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 import initialState from "./initialState";
 import { invoiceDataFn } from "../utils/invoiceData";
 
-
 const dataSliceInitialState = { ...initialState };
 
 const dataSlice = createSlice({
@@ -17,7 +16,11 @@ const dataSlice = createSlice({
       }
     },
     resetState(state, action) {
-      Object.assign(state, initialState);
+      if (action.payload) {
+        Object.assign(state, action.payload);
+      } else {
+        Object.assign(state, initialState);
+      }
     },
     updateForm(state, action) {
       let { currentBuyerData } = action.payload;

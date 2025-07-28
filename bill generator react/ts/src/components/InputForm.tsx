@@ -1,34 +1,101 @@
 import { useEffect, useState } from "react";
 import Input from "./Input";
 import Seller from "./Seller";
-import { dummyBuyers } from "../utils/dummyBuyers";
+
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { buyer } from "../Models/buyer";
 import dataSlice from "../store/dataSlice";
-import { useFetchDataQuery } from "../store/dataApi";
+import {
+  useFetchDataQuery,
+  usePostDataMutation,
+  useDeleteBuyerMutation,
+  usePutDataMutation,
+} from "../store/dataApi";
+import uiSlice from "../store/uiSlice";
 
 const InputForm: React.FC = () => {
-  const [activeSeller, setActiveSeller] = useState<number | null>(null);
+  const [activeSeller, setActiveSeller] = useState<number>(1);
+
   const inputValues = useSelector((store: any) => store.data);
+  console.log("InputForm && inputValues", inputValues);
+
   const dispatch = useDispatch();
   const params = useParams();
+  const [postData] = usePostDataMutation();
+  const [putData] = usePutDataMutation();
+  const [deleteBuyer] = useDeleteBuyerMutation();
   const { data: buyerListData } = useFetchDataQuery({});
-
   const currentBuyerData = buyerListData?.find(
     (buyer: buyer) => buyer?.buyerName == params?.buyerName
   );
+  const [isEditing, setIsEditing] = useState<boolean>(true);
+  console.log("isEditing", isEditing);
+
+  const [originalValues, setOriginalValues] = useState<any>({});
+
+  const navigate = useNavigate();
+
   const { updateField, updateForm, resetState } = dataSlice.actions;
+  const { saveChanges } = uiSlice.actions;
 
   useEffect(() => {
     if (currentBuyerData) {
       dispatch(updateForm({ currentBuyerData }));
+      setIsEditing(false);
     }
   }, [currentBuyerData]);
 
+  async function handleSaveData() {
+    if (currentBuyerData) {
+      try {
+        const result = await putData({
+          id: currentBuyerData.id,
+          editBuyer: inputValues,
+        }).unwrap();
+        console.log("Save successful:", result);
+        dispatch(saveChanges(true));
+        navigate("/");
+      } catch (error) {
+        console.error("Failed to save data:", error);
+        // You might want to show an error message to the user here
+        alert("Failed to save data. Please try again.");
+      }
+    } else {
+      try {
+        const result = await postData(inputValues).unwrap();
+        console.log("Save successful:", result);
+        dispatch(saveChanges(true));
+        navigate("/");
+      } catch (error) {
+        console.error("Failed to save data:", error);
+        // You might want to show an error message to the user here
+        alert("Failed to save data. Please try again.");
+      }
+    }
+  }
+
+  async function handleDiscardChanges() {
+    setIsEditing(false);
+    dispatch(resetState(originalValues));
+  }
+
+  async function handleDeleteData() {
+    try {
+      const id = currentBuyerData.id;
+      const result = await deleteBuyer(id).unwrap();
+      console.log("Delete successful:", result);
+
+      navigate("/");
+    } catch (error) {
+      console.error("Failed to delete data:", error);
+      // You might want to show an error message to the user here
+      alert("Failed to delete data. Please try again.");
+    }
+  }
+
   return (
     <form className='min-h-screen bg-[#242424] text-gray-100 p-4 md:p-8'>
-      {/*  */}
       <div className='max-w-6xl mx-auto'>
         {/* Buyer Information */}
         <div className='bg-[#181818] rounded-lg p-3 mb-4 shadow-lg'>
@@ -38,7 +105,10 @@ const InputForm: React.FC = () => {
                 id: "buyerName",
                 label: "Buyer Name",
                 type: "text",
-                defaultValue: currentBuyerData?.buyerName,
+                defaultValue: isEditing
+                  ? inputValues?.buyerName
+                  : currentBuyerData?.buyerName,
+                isEditing,
                 onInput: (e) =>
                   dispatch(
                     updateField({
@@ -55,7 +125,10 @@ const InputForm: React.FC = () => {
                 label: "Buyer Address",
                 type: "text",
                 isAddress: true,
-                defaultValue: currentBuyerData?.buyerAddress,
+                defaultValue: isEditing
+                  ? inputValues?.buyerAddress
+                  : currentBuyerData?.buyerAddress,
+                isEditing,
                 onInput: (e) =>
                   dispatch(
                     updateField({
@@ -91,16 +164,56 @@ const InputForm: React.FC = () => {
               ))}
             </div>
             <div className='flex justify-end gap-4 mb-6'>
+              {isEditing && (
+                <button
+                  type='button'
+                  onClick={handleDiscardChanges}
+                  className='px-6 py-2 rounded-md bg-[#181818] text-gray-200 hover:bg-gray-600 hover:cursor-pointer transition-colors'>
+                  Discard Changes
+                </button>
+              )}
+              {!currentBuyerData && (
+                <button
+                  type='button'
+                  className='px-6 py-2 rounded-md bg-[#181818] text-gray-200 hover:bg-gray-600 hover:cursor-pointer transition-colors'
+                  onClick={handleSaveData}>
+                  Save
+                </button>
+              )}
+              {currentBuyerData && (
+                <button
+                  type='button'
+                  className='px-6 py-2 rounded-md bg-[#181818] text-gray-200 hover:bg-gray-600 hover:cursor-pointer transition-colors'
+                  onClick={() => {
+                    if (isEditing) {
+                      handleSaveData();
+                    } else {
+                      console.log("clicked on edit & inputValues", inputValues);
+
+                      setOriginalValues(inputValues);
+                      setIsEditing((edit) => !edit);
+                    }
+                  }}>
+                  {isEditing ? "Save Changes" : "Edit"}
+                </button>
+              )}
+
               <button
                 type='button'
-                className='px-6 py-2 rounded-md bg-[#181818] text-gray-200 hover:bg-gray-600 hover:cursor-pointer transition-colors'>
-                Save Data
+                className='px-6 py-2 rounded-md bg-[#181818] text-gray-200 hover:bg-gray-600 hover:cursor-pointer transition-colors'
+                onClick={handleDeleteData}>
+                Delete
               </button>
               <button
                 type='submit'
                 className='px-6 py-2 rounded-md text-[#e87f05] font-medium hover:bg-[#c0bfbf] hover:text-[#181818] hover:cursor-pointer transition-colors'>
-                Generate PDF
+                Generate Invoice Data
               </button>
+              {/* <button
+                type='submit'
+                className='px-6 py-2 rounded-md text-[#e87f05] font-medium hover:bg-[#c0bfbf] hover:text-[#181818] hover:cursor-pointer transition-colors'>
+                Generate PDF
+              </button> */}
             </div>
           </div>
 
@@ -109,18 +222,21 @@ const InputForm: React.FC = () => {
               <Seller
                 num={1}
                 currentBuyerData={currentBuyerData}
+                isEditing={isEditing}
               />
             )}
             {activeSeller === 2 && (
               <Seller
                 num={2}
                 currentBuyerData={currentBuyerData}
+                isEditing={isEditing}
               />
             )}
             {activeSeller === 3 && (
               <Seller
                 num={3}
                 currentBuyerData={currentBuyerData}
+                isEditing={isEditing}
               />
             )}
           </div>

@@ -9,20 +9,21 @@ import { useFetchDataQuery } from "../store/dataApi";
 
 const cssClass = `bg-[#4A4A4A] text-[#F5F5F5] border-1 border-[#2F2F2F] focus:border-[#e87f05] focus:outline-none focus:ring-2 focus:ring-[#e87f05]/50 p-1 m-1 `;
 
-const Seller: React.FC<{ num: number; currentBuyerData?: buyer }> = ({
-  num,
-  currentBuyerData,
-}) => {
+const Seller: React.FC<{
+  num: number;
+  currentBuyerData?: buyer;
+  isEditing: boolean;
+}> = ({ num, currentBuyerData, isEditing }) => {
   const dispatch = useDispatch();
   const params = useParams();
   const inputValues = useSelector((store: any) => store.data);
-  console.log("inputValues", inputValues);
 
   const { data: buyerListData } = useFetchDataQuery({});
 
   const { updateField, saveInvoiceData } = dataSlice.actions;
 
-    const storedBuyerListDataCopy = JSON.parse(JSON.stringify(buyerListData));
+  const storedBuyerListDataCopy =
+    JSON.parse(JSON.stringify(buyerListData)) || [];
 
   console.log("currentBuyerData", currentBuyerData);
 
@@ -30,14 +31,12 @@ const Seller: React.FC<{ num: number; currentBuyerData?: buyer }> = ({
     buyer: buyer | undefined,
     num: number
   ): seller | undefined {
-    if (!buyer) return undefined;
-    if (num === 1) return buyer.seller1;
-    if (num === 2) return buyer.seller2;
-    if (num === 3) return buyer.seller3;
-    return undefined;
+    if (num === 1) return buyer?.seller1;
+    if (num === 2) return buyer?.seller2;
+    if (num === 3) return buyer?.seller3;
   }
 
-  const sellerData = getSellerByNumber(currentBuyerData, num);
+  const sellerData = getSellerByNumber(currentBuyerData || inputValues, num);
   console.log("sellerData", sellerData);
 
   function handleParticulars() {
@@ -59,9 +58,13 @@ const Seller: React.FC<{ num: number; currentBuyerData?: buyer }> = ({
       <div className='flex gap-2'>
         <Input
           obj={{
+            isEditing,
             label: "Seller Name",
             id: "sellerName",
-            defaultValue: sellerData?.name,
+
+            defaultValue: isEditing
+              ? inputValues[`seller${num}`]?.name
+              : sellerData?.name,
             onInput: (e) => {
               dispatch(
                 updateField({
@@ -76,10 +79,13 @@ const Seller: React.FC<{ num: number; currentBuyerData?: buyer }> = ({
         />
         <Input
           obj={{
+            isEditing,
             isAddress: true,
             label: "Seller Address",
             id: "sellerAddress",
-            defaultValue: sellerData?.address,
+            defaultValue: isEditing
+              ? inputValues[`seller${num}`]?.address
+              : sellerData?.address,
             onInput: (e) => {
               dispatch(
                 updateField({
@@ -97,9 +103,12 @@ const Seller: React.FC<{ num: number; currentBuyerData?: buyer }> = ({
       <div className='flex gap-5'>
         <Input
           obj={{
+            isEditing,
             label: "Invoice No Prefix",
             id: "invoiceNoPrefix",
-            defaultValue: sellerData?.invoiceNoPrefix,
+            defaultValue: isEditing
+              ? inputValues[`seller${num}`]?.invoiceNoPrefix
+              : sellerData?.invoiceNoPrefix,
             onInput: (e) => {
               dispatch(
                 updateField({
@@ -114,9 +123,12 @@ const Seller: React.FC<{ num: number; currentBuyerData?: buyer }> = ({
         />
         <Input
           obj={{
+            isEditing,
             label: "Invoice No Start",
             id: "invoiceNoStart",
-            defaultValue: sellerData?.invoiceNoStart,
+            defaultValue: isEditing
+              ? inputValues[`seller${num}`]?.invoiceNoStart
+              : sellerData?.invoiceNoStart,
             onInput: (e) => {
               dispatch(
                 updateField({
@@ -131,9 +143,12 @@ const Seller: React.FC<{ num: number; currentBuyerData?: buyer }> = ({
         />
         <Input
           obj={{
+            isEditing,
             label: "Invoice No Add",
             id: "invoiceNoAdd",
-            defaultValue: sellerData?.invoiceNoAdd,
+            defaultValue: isEditing
+              ? inputValues[`seller${num}`]?.invoiceNoAdd
+              : sellerData?.invoiceNoAdd,
             onInput: (e) => {
               dispatch(
                 updateField({
@@ -151,10 +166,13 @@ const Seller: React.FC<{ num: number; currentBuyerData?: buyer }> = ({
       <div className='flex gap-5 mb-5'>
         <Input
           obj={{
+            isEditing,
             label: "Date Start",
             id: "dateStart",
             type: "date",
-            defaultValue: sellerData?.dateStart,
+            defaultValue: isEditing
+              ? inputValues[`seller${num}`]?.dateStart
+              : sellerData?.dateStart,
             onInput: (e) => {
               dispatch(
                 updateField({
@@ -169,9 +187,12 @@ const Seller: React.FC<{ num: number; currentBuyerData?: buyer }> = ({
         />
         <Input
           obj={{
+            isEditing,
             label: "TOTAL",
             id: "total",
-            defaultValue: sellerData?.total,
+            defaultValue: isEditing
+              ? inputValues[`seller${num}`]?.total
+              : sellerData?.total,
             onInput: (e) => {
               dispatch(
                 updateField({
@@ -192,8 +213,13 @@ const Seller: React.FC<{ num: number; currentBuyerData?: buyer }> = ({
           </label>
           <input
             className={cssClass + " w-100"}
+            disabled={!isEditing}
             type='text'
-            defaultValue={sellerData?.data?.particulars[i] ?? ""}
+            value={
+              isEditing
+                ? inputValues[`seller${num}`]?.data?.particulars[i] ?? ""
+                : sellerData?.data?.particulars[i] ?? ""
+            }
             onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
               dispatch(
                 updateField({
@@ -211,7 +237,12 @@ const Seller: React.FC<{ num: number; currentBuyerData?: buyer }> = ({
           <input
             className={cssClass}
             type='number'
-            defaultValue={sellerData?.data?.rate[i]}
+            disabled={!isEditing}
+            value={
+              isEditing
+                ? inputValues[`seller${num}`]?.data?.rate[i] ?? 0
+                : sellerData?.data?.rate[i] ?? 0
+            }
             onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
               dispatch(
                 updateField({

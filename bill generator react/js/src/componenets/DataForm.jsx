@@ -25,15 +25,6 @@ export default function DataForm() {
       dispatch(updateForm({ currentBuyerData }));
     }
   }, [currentBuyerData]);
-  //
-  //
-  // useEffect(() => {
-  //   console.log("from store:--");
-  //   console.log("inputValues->", inputValues);
-  //   console.log("currentBuyerData->", currentBuyerData);
-  //   console.log("storedBuyerListData->", storedBuyerListData);
-  //   console.log("from store:--");
-  // }, [inputValues, storedBuyerListData]);
 
   // handleDeleteFn;
   function handleDeleteFn() {
