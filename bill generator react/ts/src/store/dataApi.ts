@@ -26,6 +26,7 @@ export const dataApi = createApi({
         method: "POST",
         body: newBuyer,
       }),
+      invalidatesTags: [tagTypes.Data],
     }),
     putData: builder.mutation({
       query: ({ id, editBuyer }: { id: string; editBuyer: buyer }) => ({
@@ -33,6 +34,7 @@ export const dataApi = createApi({
         method: "PUT",
         body: editBuyer,
       }),
+      invalidatesTags: [tagTypes.Data],
     }),
     deleteBuyer: builder.mutation({
       query: (id) => ({

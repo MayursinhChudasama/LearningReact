@@ -36,7 +36,8 @@ const InputForm: React.FC = () => {
 
   const navigate = useNavigate();
 
-  const { updateField, updateForm, resetState } = dataSlice.actions;
+  const { updateField, updateForm, resetState, saveInvoiceData } =
+    dataSlice.actions;
   const { saveChanges } = uiSlice.actions;
 
   useEffect(() => {
@@ -55,7 +56,6 @@ const InputForm: React.FC = () => {
         }).unwrap();
         console.log("Save successful:", result);
         dispatch(saveChanges(true));
-        navigate("/");
       } catch (error) {
         console.error("Failed to save data:", error);
         // You might want to show an error message to the user here
@@ -75,9 +75,10 @@ const InputForm: React.FC = () => {
     }
   }
 
-  async function handleDiscardChanges() {
+  function handleDiscardChanges() {
     setIsEditing(false);
     dispatch(resetState(originalValues));
+    dispatch(saveChanges(false));
   }
 
   async function handleDeleteData() {
@@ -164,7 +165,7 @@ const InputForm: React.FC = () => {
               ))}
             </div>
             <div className='flex justify-end gap-4 mb-6'>
-              {isEditing && (
+              {currentBuyerData && isEditing && (
                 <button
                   type='button'
                   onClick={handleDiscardChanges}
@@ -204,11 +205,7 @@ const InputForm: React.FC = () => {
                 onClick={handleDeleteData}>
                 Delete
               </button>
-              <button
-                type='submit'
-                className='px-6 py-2 rounded-md text-[#e87f05] font-medium hover:bg-[#c0bfbf] hover:text-[#181818] hover:cursor-pointer transition-colors'>
-                Generate Invoice Data
-              </button>
+
               {/* <button
                 type='submit'
                 className='px-6 py-2 rounded-md text-[#e87f05] font-medium hover:bg-[#c0bfbf] hover:text-[#181818] hover:cursor-pointer transition-colors'>

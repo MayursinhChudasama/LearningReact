@@ -30,6 +30,7 @@ export interface singleInvoiceData {
 }
 
 export interface buyer {
+  id: number | string;
   buyerName: string;
   buyerAddress: string;
   type: string;

@@ -74,7 +74,7 @@ const dataSlice = createSlice({
       };
       const invoiceData = invoiceDataFn(data);
 
-      console.log("invoiceData after", invoiceData);
+      console.log("invoiceData generated", invoiceData);
       state[`seller${num}`].invoiceData = invoiceData;
     },
   },
