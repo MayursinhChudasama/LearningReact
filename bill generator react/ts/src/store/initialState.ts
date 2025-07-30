@@ -2,6 +2,7 @@ import { buyer } from "../Models/buyer";
 
 const initialState: buyer = {
   id: Date.now().toString(),
+
   buyerName: "",
   buyerAddress: "",
   type: "",

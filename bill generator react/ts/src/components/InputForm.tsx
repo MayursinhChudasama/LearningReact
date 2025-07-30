@@ -18,7 +18,6 @@ const InputForm: React.FC = () => {
   const [activeSeller, setActiveSeller] = useState<number>(1);
 
   const inputValues = useSelector((store: any) => store.data);
-  console.log("InputForm && inputValues", inputValues);
 
   const dispatch = useDispatch();
   const params = useParams();
@@ -30,7 +29,6 @@ const InputForm: React.FC = () => {
     (buyer: buyer) => buyer?.buyerName == params?.buyerName
   );
   const [isEditing, setIsEditing] = useState<boolean>(true);
-  console.log("isEditing", isEditing);
 
   const [originalValues, setOriginalValues] = useState<any>({});
 
@@ -47,31 +45,23 @@ const InputForm: React.FC = () => {
     }
   }, [currentBuyerData]);
 
-  async function handleSaveData() {
+  async function handleSaveData(e: React.MouseEvent) {
     if (currentBuyerData) {
       try {
         const result = await putData({
           id: currentBuyerData.id,
           editBuyer: inputValues,
         }).unwrap();
-        console.log("Save successful:", result);
         dispatch(saveChanges(true));
+        // navigate("/");
       } catch (error) {
-        console.error("Failed to save data:", error);
-        // You might want to show an error message to the user here
         alert("Failed to save data. Please try again.");
       }
     } else {
-      try {
-        const result = await postData(inputValues).unwrap();
-        console.log("Save successful:", result);
-        dispatch(saveChanges(true));
-        navigate("/");
-      } catch (error) {
-        console.error("Failed to save data:", error);
-        // You might want to show an error message to the user here
-        alert("Failed to save data. Please try again.");
-      }
+      await postData(inputValues);
+
+      dispatch(saveChanges(true));
+      navigate("/");
     }
   }
 
@@ -85,18 +75,14 @@ const InputForm: React.FC = () => {
     try {
       const id = currentBuyerData.id;
       const result = await deleteBuyer(id).unwrap();
-      console.log("Delete successful:", result);
-
       navigate("/");
     } catch (error) {
-      console.error("Failed to delete data:", error);
-      // You might want to show an error message to the user here
       alert("Failed to delete data. Please try again.");
     }
   }
 
   return (
-    <form className='min-h-screen bg-[#242424] text-gray-100 p-4 md:p-8'>
+    <div className='min-h-screen bg-[#242424] text-gray-100 p-4 md:p-8'>
       <div className='max-w-6xl mx-auto'>
         {/* Buyer Information */}
         <div className='bg-[#181818] rounded-lg p-3 mb-4 shadow-lg'>
@@ -167,7 +153,7 @@ const InputForm: React.FC = () => {
             <div className='flex justify-end gap-4 mb-6'>
               {currentBuyerData && isEditing && (
                 <button
-                  type='button'
+                  // type='button'
                   onClick={handleDiscardChanges}
                   className='px-6 py-2 rounded-md bg-[#181818] text-gray-200 hover:bg-gray-600 hover:cursor-pointer transition-colors'>
                   Discard Changes
@@ -175,22 +161,22 @@ const InputForm: React.FC = () => {
               )}
               {!currentBuyerData && (
                 <button
-                  type='button'
-                  className='px-6 py-2 rounded-md bg-[#181818] text-gray-200 hover:bg-gray-600 hover:cursor-pointer transition-colors'
-                  onClick={handleSaveData}>
+                  type='button' // Explicitly set type to button
+                  onClick={(e) => {
+                    handleSaveData(e);
+                  }}
+                  className='px-6 py-2 rounded-md bg-[#181818] text-gray-200 hover:bg-gray-600 hover:cursor-pointer transition-colors'>
                   Save
                 </button>
               )}
               {currentBuyerData && (
                 <button
-                  type='button'
+                  // type='button'
                   className='px-6 py-2 rounded-md bg-[#181818] text-gray-200 hover:bg-gray-600 hover:cursor-pointer transition-colors'
-                  onClick={() => {
+                  onClick={(e) => {
                     if (isEditing) {
-                      handleSaveData();
+                      handleSaveData(e);
                     } else {
-                      console.log("clicked on edit & inputValues", inputValues);
-
                       setOriginalValues(inputValues);
                       setIsEditing((edit) => !edit);
                     }
@@ -199,12 +185,14 @@ const InputForm: React.FC = () => {
                 </button>
               )}
 
-              <button
-                type='button'
-                className='px-6 py-2 rounded-md bg-[#181818] text-gray-200 hover:bg-gray-600 hover:cursor-pointer transition-colors'
-                onClick={handleDeleteData}>
-                Delete
-              </button>
+              {currentBuyerData && (
+                <button
+                  type='button'
+                  className='px-6 py-2 rounded-md bg-[#181818] text-gray-200 hover:bg-gray-600 hover:cursor-pointer transition-colors'
+                  onClick={handleDeleteData}>
+                  Delete
+                </button>
+              )}
 
               {/* <button
                 type='submit'
@@ -217,21 +205,21 @@ const InputForm: React.FC = () => {
           <div>
             {activeSeller === 1 && (
               <Seller
-                num={1}
+                num={Number(1)}
                 currentBuyerData={currentBuyerData}
                 isEditing={isEditing}
               />
             )}
             {activeSeller === 2 && (
               <Seller
-                num={2}
+                num={Number(2)}
                 currentBuyerData={currentBuyerData}
                 isEditing={isEditing}
               />
             )}
             {activeSeller === 3 && (
               <Seller
-                num={3}
+                num={Number(3)}
                 currentBuyerData={currentBuyerData}
                 isEditing={isEditing}
               />
@@ -239,7 +227,7 @@ const InputForm: React.FC = () => {
           </div>
         </div>
       </div>
-    </form>
+    </div>
   );
 };
 

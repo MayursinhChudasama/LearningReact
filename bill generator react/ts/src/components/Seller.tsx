@@ -6,7 +6,11 @@ import Input from "./Input";
 import dataSlice from "../store/dataSlice";
 import { usePutDataMutation } from "../store/dataApi";
 import uiSlice from "../store/uiSlice";
-import initialState from "../store/initialState";
+
+import Invoice from "./Invoice";
+import generatePDFLayout1 from "../utils/generatePDFLayout1";
+import generatePDFLayout2 from "../utils/generatePDFLayout2";
+import generatePDFLayout3 from "../utils/generatePDFLayout3";
 
 const cssClass = `bg-[#4A4A4A] text-[#F5F5F5] border-1 border-[#2F2F2F] focus:border-[#e87f05] focus:outline-none focus:ring-2 focus:ring-[#e87f05]/50 p-1 m-1 `;
 
@@ -15,6 +19,8 @@ const Seller: React.FC<{
   currentBuyerData?: buyer;
   isEditing: boolean;
 }> = ({ num, currentBuyerData, isEditing }) => {
+  console.log("num seller", num);
+
   const dispatch = useDispatch();
 
   const inputValues = useSelector((store: any) => store.data);
@@ -22,7 +28,6 @@ const Seller: React.FC<{
 
   const { updateField, saveInvoiceData } = dataSlice.actions;
   const { saveChanges } = uiSlice.actions;
-  console.log("currentBuyerData", currentBuyerData);
 
   function getSellerByNumber(
     buyer: buyer | undefined,
@@ -34,7 +39,6 @@ const Seller: React.FC<{
   }
 
   const sellerData = getSellerByNumber(currentBuyerData || inputValues, num);
-  console.log("sellerData", sellerData);
 
   function handleParticulars() {
     let noOfParticulars = 0;
@@ -52,24 +56,19 @@ const Seller: React.FC<{
   async function putDataApi() {
     try {
       const id = currentBuyerData?.id?.toString() || Date.now().toString();
-      console.log("putDataApi inputValues:", inputValues);
-      console.log("putDataApi id:", id);
+
       const result = await putData({
         id,
         editBuyer: inputValues,
       }).unwrap();
-      console.log("Save successful:", result);
       dispatch(saveChanges(true));
-      return;
     } catch (error) {
-      console.error("Failed to save data:", error);
       alert("Failed to save data. Please try again.");
     }
   }
 
   async function handleGenerateInvoiceData() {
     try {
-      console.log("this is handleGenerateInvoiceData");
       if (!isEditing) {
         dispatch(
           saveInvoiceData({
@@ -82,13 +81,82 @@ const Seller: React.FC<{
         alert("Please save the buyer first");
       }
     } catch (err) {
-      console.error("Unexpected error in handleGenerateInvoiceData:", err);
       alert("Unexpected error occurred.");
+    }
+  }
+
+  function handleGenereatePDF() {
+    if (!inputValues[`seller${num}`].invoiceData) {
+      alert("Generate data first by clicking on Save Data only");
+      return;
+    }
+    let seller = inputValues[`seller${num}`];
+    const FINAL_DATA_FOR_PDF = {
+      layoutType: seller.layoutType,
+      buyerName: inputValues.buyerName,
+      buyerAddress: inputValues.buyerAddress,
+      sellerName: seller.name,
+      sellerAddress: seller.address,
+      invoiceNoPrefix: seller.invoiceNoPrefix,
+      invoiceNoStart: seller.invoiceNoStart,
+      invoiceNoAdd: seller.invoiceNoAdd,
+      dateStart: seller.dateStart,
+      total: seller.total,
+      noOfParticulars: seller.noOfParticulars,
+      data: {
+        particulars: seller.data.particulars,
+        rate: seller.data.rate,
+      },
+      invoiceData: seller.invoiceData,
+    };
+    console.log("FINAL_DATA_FOR_PDF***", FINAL_DATA_FOR_PDF);
+
+    if (seller.layoutType === "layout1") {
+      generatePDFLayout1(FINAL_DATA_FOR_PDF);
+    } else if (seller.layoutType === "layout2") {
+      generatePDFLayout2(FINAL_DATA_FOR_PDF);
+    } else if (seller.layoutType === "layout3") {
+      generatePDFLayout3(FINAL_DATA_FOR_PDF);
     }
   }
 
   return (
     <>
+      {/* LAYOUT TYPE */}
+      <label
+        className='p-1 m-1'
+        htmlFor='layoutType'>
+        Layout-type
+      </label>
+      <select
+        id='layoutType'
+        className={cssClass}
+        onInput={(e: React.ChangeEvent<HTMLSelectElement>) => {
+          dispatch(
+            updateField({
+              key: "layoutType",
+              value: e.target.value.trim(),
+              num,
+              currentBuyerData,
+            })
+          );
+        }}>
+        <option
+          value='layout1'
+          id='layout1'>
+          Layout-1 (15)
+        </option>
+        <option
+          value='layout2'
+          id='layout2'>
+          Layout-2 (12)
+        </option>
+        <option
+          value='layout3'
+          id='layout3'>
+          Layout-3 (13)
+        </option>
+      </select>
       {/* SELLER DETAILS */}
       <div className='flex gap-2'>
         <Input
@@ -293,17 +361,26 @@ const Seller: React.FC<{
         </div>
       ))}
       <div className='p-2'>
-        <div>
-          <button
-            type='button'
-            onClick={async () => {
-              handleGenerateInvoiceData();
-              await putDataApi();
-            }}
-            className='px-6 py-2 rounded-md text-[#e87f05] font-medium hover:bg-[#c0bfbf] hover:text-[#181818] hover:cursor-pointer transition-colors'>
-            Generate Invoice Data
-          </button>
-        </div>
+        {currentBuyerData && (
+          <div>
+            <button
+              type='button'
+              onClick={handleGenerateInvoiceData}
+              className='px-6 py-2 rounded-md text-[#e87f05] font-medium hover:bg-[#c0bfbf] hover:text-[#181818] hover:cursor-pointer transition-colors'>
+              Generate Invoice Data
+            </button>
+            <button
+              type='button'
+              onClick={handleGenereatePDF}
+              className='px-6 py-2 rounded-md text-[#e87f05] font-medium hover:bg-[#c0bfbf] hover:text-[#181818] hover:cursor-pointer transition-colors'>
+              Generate PDF
+            </button>
+          </div>
+        )}
+        <Invoice
+          sellerData={sellerData}
+          num={num}
+        />
       </div>
     </>
   );

@@ -16,7 +16,7 @@ export interface seller {
   dateStart: string;
   noOfParticulars: string;
   data: data;
-  invoiceData: singleInvoiceData[];
+  invoiceData: singleInvoiceData[] | undefined;
 }
 
 export interface singleInvoiceData {
@@ -34,7 +34,7 @@ export interface buyer {
   buyerName: string;
   buyerAddress: string;
   type: string;
-  seller1: seller;
-  seller2: seller;
-  seller3: seller;
+  seller1: seller | undefined;
+  seller2: seller | undefined;
+  seller3: seller | undefined;
 }

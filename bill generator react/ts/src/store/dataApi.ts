@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { buyer } from "../Models/buyer";
+import { buyer, seller } from "../Models/buyer";
 
 const tagTypes = {
   Data: "Data",
@@ -14,11 +14,11 @@ export const dataApi = createApi({
       return headers;
     },
   }),
-  tagTypes: [tagTypes.Data],
+  // tagTypes: [tagTypes.Data],
   endpoints: (builder) => ({
     fetchData: builder.query({
       query: () => "buyers",
-      providesTags: [tagTypes.Data],
+      // providesTags: [tagTypes.Data],
     }),
     postData: builder.mutation({
       query: (newBuyer) => ({
@@ -26,7 +26,7 @@ export const dataApi = createApi({
         method: "POST",
         body: newBuyer,
       }),
-      invalidatesTags: [tagTypes.Data],
+      // invalidatesTags: [tagTypes.Data],
     }),
     putData: builder.mutation({
       query: ({ id, editBuyer }: { id: string; editBuyer: buyer }) => ({
@@ -34,14 +34,30 @@ export const dataApi = createApi({
         method: "PUT",
         body: editBuyer,
       }),
-      invalidatesTags: [tagTypes.Data],
+      // invalidatesTags: [tagTypes.Data],
+    }),
+    putSellerData: builder.mutation({
+      query: ({
+        id,
+        sellerNo,
+        sellerData,
+      }: {
+        id: string;
+        sellerNo: string;
+        sellerData: seller;
+      }) => ({
+        url: `buyers/${id}/${sellerNo}`,
+        method: "PUT",
+        body: sellerData,
+      }),
+      // invalidatesTags: [tagTypes.Data],
     }),
     deleteBuyer: builder.mutation({
       query: (id) => ({
         url: `buyers/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: [tagTypes.Data],
+      // invalidatesTags: [tagTypes.Data],
     }),
   }),
 });
@@ -51,4 +67,5 @@ export const {
   usePostDataMutation,
   usePutDataMutation,
   useDeleteBuyerMutation,
+  usePutSellerDataMutation,
 } = dataApi;
